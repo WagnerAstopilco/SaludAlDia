@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <include layout="@layout/adult_toolbar" />
+
+    <!-- Contenedor del contenido principal con padding -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvNewTreatment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos del tratamiento"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Nombre del tratamiento -->
+        <TextView
+            android:id="@+id/textViewTreatmentNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:layout_marginTop="8dp" />
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del tratamiento"
+            android:inputType="textPersonName"
+            android:layout_marginTop="8dp" />
+
+        <!-- Fecha de inicio -->
+        <TextView
+            android:id="@+id/textViewStartDateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha inicio"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/buttonStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar fecha de inicio" />
+
+        <!-- Fecha de fin -->
+        <TextView
+            android:id="@+id/textViewEndDateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha fin"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/buttonEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar fecha de fin" />
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/textViewTreatmentDescriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:layout_marginTop="8dp" />
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción"
+            android:inputType="textMultiLine"
+            android:minLines="1"
+            android:layout_marginTop="8dp" />
+
+        <!-- Estado (activo/inactivo) -->
+        <TextView
+            android:id="@+id/textViewTreatmentStateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado"
+            android:layout_marginTop="8dp" />
+        <Spinner
+            android:id="@+id/spinnerState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:entries="@array/treatment_states" />
+
+        <!-- Botón Guardar -->
+        <Button
+            android:id="@+id/buttonSaveTreatment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar tratamiento"
+            android:layout_marginTop="24dp" />
+    </LinearLayout>
+</LinearLayout>

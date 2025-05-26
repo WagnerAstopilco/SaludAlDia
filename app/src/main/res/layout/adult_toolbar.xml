@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_adult"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/holo_red_dark"
+    android:titleTextColor="@android:color/white"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:titleTextColor="@android:color/white"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:menu="@menu/adult_toolbar_menu"
+    />

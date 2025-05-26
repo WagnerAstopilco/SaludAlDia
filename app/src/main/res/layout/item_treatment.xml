@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:elevation="4dp"
+    app:cardCornerRadius="12dp"
+    android:layout_marginHorizontal="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Nombre + Switch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvTreatmentName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nombre del tratamiento"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/switchTreatmentState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activo"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <!-- Fechas -->
+        <TextView
+            android:id="@+id/tvDurationLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Duración del tratamiento"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+        <TextView
+            android:id="@+id/tvTreatmentDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inicio: 2024-01-01 - Fin: 2024-12-31"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/tvDescriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+        <TextView
+            android:id="@+id/tvTreatmentDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descripción del tratamiento"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Lista de medicamentos -->
+        <TextView
+            android:id="@+id/tvMedicationListLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medicamentos del tratamiento"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+        <TextView
+            android:id="@+id/tvMedicationsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medicamento 1 - Dosis 1\nMedicamento 2 - Dosis 2"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnDeleteTreatment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eliminar tratamiento"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/holo_red_light" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/txtMedicationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/txtMedicationDose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Dosis"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/btnViewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/medical_info"
+            android:tint="@color/medication_details_tint"
+            android:contentDescription="Ver detalles"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp" />
+
+        <ImageButton
+            android:id="@+id/btnSetReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/reminder"
+            android:tint="@color/medication_reminder_tint"
+            android:contentDescription="Recordatorio"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp" />
+
+        <ImageButton
+            android:id="@+id/btnDeleteMedication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete"
+            android:tint="@color/medication_delete_tint"
+            android:contentDescription="Eliminar"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+</LinearLayout>
+

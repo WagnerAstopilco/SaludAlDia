@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="image_button_tint">#FFFFFF</color>
+    <color name="medication_details_tint">#0E496D</color>
+    <color name="medication_reminder_tint">#7C4F00</color>
+    <color name="medication_delete_tint">#9E0000</color>
+    <color name="spinnerLanguage">#FFFFFF</color>
+</resources>

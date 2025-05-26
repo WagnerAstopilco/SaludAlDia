@@ -1,0 +1,192 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_adult"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/holo_red_dark"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:elevation="4dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16sp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="639dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Datos personales"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <ImageButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Editar"
+                    android:src="@drawable/editar"
+                    android:tint="@color/image_button_tint" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombres"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtNames"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombres"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellidos"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtLastNames"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apellidos"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edad"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edad"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peso"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Peso"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alergias"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtAllergies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alergias"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="48dp"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancelar"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnTreatments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tratamientos" />
+
+            <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Historial" />
+
+        </LinearLayout>
+
+    </ScrollView>
+    </LinearLayout>

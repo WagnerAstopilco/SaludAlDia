@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "872461959754",
+    "firebase_url": "https://daily-health-ff89e-default-rtdb.firebaseio.com",
+    "project_id": "daily-health-ff89e",
+    "storage_bucket": "daily-health-ff89e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872461959754:android:0a145b96b2c2d3d06cdcb3",
+        "android_client_info": {
+          "package_name": "com.example.saludaldia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872461959754-bsna925ob86shk9n9ssp25d3g5vq5ruh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.saludaldia",
+            "certificate_hash": "10bf76d8b1c55a25c3cfa4f93fca914bd63de30b"
+          }
+        },
+        {
+          "client_id": "872461959754-voncofidg6tag0jd5p5e7vie278s9a0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrwh3_Qpv5TRYrB0-1EseynAIX-lhTifU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872461959754-voncofidg6tag0jd5p5e7vie278s9a0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
