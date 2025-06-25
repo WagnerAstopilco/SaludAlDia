@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecciona tu rol"
+        android:text="@string/select_role_activity_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="32dp" />
@@ -20,12 +20,12 @@
         android:id="@+id/btnRolAdulto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Soy un Adulto Mayor"
+        android:text="@string/select_role_activity_role_older_adult"
         android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnRolCuidador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Soy un Cuidador" />
+        android:text="@string/select_role_activity_role_caregiver" />
 </LinearLayout>

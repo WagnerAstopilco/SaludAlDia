@@ -40,7 +40,7 @@ public class NewTreatmentActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Nuevo tratamiento");
+            getSupportActionBar().setTitle(getString(R.string.new_treatment_activity_title));
         }
         editTextName = findViewById(R.id.editTextName);
         editTextDescription = findViewById(R.id.editTextDescription);

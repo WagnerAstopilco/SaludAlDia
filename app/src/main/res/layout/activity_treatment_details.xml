@@ -30,12 +30,12 @@
                 android:id="@+id/tvTreatmentDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Detalles del tratamiento"
+                android:text="@string/treatments_details_activity_data"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <!-- Nombre -->
-            <TextView android:text="Nombre del tratamiento"
+            <TextView android:text="@string/treatments_details_activity_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
@@ -46,7 +46,7 @@
                 android:enabled="false"/>
 
             <!-- Fecha de inicio -->
-            <TextView android:text="Fecha de inicio"
+            <TextView android:text="@string/treatments_details_activity_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
@@ -57,7 +57,7 @@
                 android:enabled="false"/>
 
             <!-- Fecha de fin -->
-            <TextView android:text="Fecha de fin"
+            <TextView android:text="@string/treatments_details_activity_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
@@ -68,7 +68,7 @@
                 android:enabled="false"/>
 
             <!-- Descripción -->
-            <TextView android:text="Descripción"
+            <TextView android:text="@string/treatments_details_activity_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText
@@ -80,7 +80,8 @@
                 android:enabled="false"/>
 
             <!-- Estado -->
-            <TextView android:text="Estado"
+            <TextView
+                android:text="@string/treatments_details_activity_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <Switch
@@ -98,13 +99,13 @@
 
                 <Button
                     android:id="@+id/btnEdit"
-                    android:text="Editar"
+                    android:text="@string/treatments_details_activity_button_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnSave"
-                    android:text="Guardar"
+                    android:text="@string/treatments_details_activity_button_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -112,7 +113,7 @@
 
                 <Button
                     android:id="@+id/btnCancel"
-                    android:text="Cancelar"
+                    android:text="@string/treatments_details_activity_button_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -121,7 +122,7 @@
 
             <!-- Lista de medicamentos -->
             <TextView
-                android:text="Medicamentos"
+                android:text="@string/treatments_details_activity_list_medications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

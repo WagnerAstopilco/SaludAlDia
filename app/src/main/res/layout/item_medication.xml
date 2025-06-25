@@ -10,7 +10,7 @@
         android:id="@+id/txtMedicationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="@string/medication_item_activity_name"
         android:textStyle="bold"
         android:textSize="16sp" />
 
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Dosis"
+            android:text="@string/medication_item_activity_dose"
             android:textSize="14sp" />
 
         <ImageButton

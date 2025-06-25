@@ -42,7 +42,7 @@ public class ReminderActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Recordatorio");
+            getSupportActionBar().setTitle(getString(R.string.reminder_activity_title));
         }
 
         treatmentId = getIntent().getStringExtra("treatmentId");

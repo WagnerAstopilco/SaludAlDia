@@ -32,7 +32,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Nuevo medicamento");
+            getSupportActionBar().setTitle(getString(R.string.new_medication_activity_title));
         }
         etName = findViewById(R.id.etMedicationName);
         etDose = findViewById(R.id.etMedicationDose);

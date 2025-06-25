@@ -1,7 +1,11 @@
 package com.example.saludaldia.ui.adult;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,34 +13,84 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.saludaldia.R;
-import com.example.saludaldia.adapter.TreatmentAdapter;
-import com.example.saludaldia.data.model.Medication;
-import com.example.saludaldia.data.model.Treatment;
-import com.example.saludaldia.data.repository.TreatmentRepository;
+import com.example.saludaldia.adapter.FragmentPageAdapter;
 import com.example.saludaldia.ui.login.LoginActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.example.saludaldia.ui.treatment.NewTreatmentActivity;
+import com.example.saludaldia.utils.FontScaleContextWrapper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.example.saludaldia.data.repository.MedicationRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+// Importaciones para Google Calendar API
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.calendar.Calendar; // Clase Calendar de la API de Google
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.CalendarListEntry;
+
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AdultMainActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
-    private TreatmentAdapter adapter;
+    private ViewPager2 viewPager;
+    private TabLayout tabLayout;
+
+    private static final String TAG = "AdultMainActivity";
+    private Calendar mCalendarService; // Objeto para interactuar con la API de Calendar
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private String appCalendarId = null;
+    private static final String APP_CALENDAR_NAME = "SaludAlDia Recordatorios"; // Nombre específico para el calendario de tu app
+
+    // 1. Interfaz para comunicar a los Fragments cuando el servicio de Calendar esté listo
+    public interface ListCalendarEventsListener {
+        void onCalendarServiceReady(Calendar calendarService, String calendarId);
+        void onCalendarServiceError(String message);
+    }
+
+    private ListCalendarEventsListener listCalendarEventsListener;
+
+    // Método para que los Fragments puedan registrarse como listeners
+    public void setListCalendarEventsListener(ListCalendarEventsListener listener) {
+        this.listCalendarEventsListener = listener;
+    }
+
+    // Métodos para que los Fragments puedan obtener el servicio y el ID directamente si ya están listos
+    public Calendar getCalendarService() {
+        return mCalendarService;
+    }
+
+    public String getAppCalendarId() {
+        return appCalendarId;
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences prefs = newBase.getSharedPreferences("settings_prefs", MODE_PRIVATE);
+        String currentFontSize = prefs.getString("font_size", "medium");
+
+        Context contextForFont = FontScaleContextWrapper.wrap(newBase);
+
+        super.attachBaseContext(contextForFont);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,89 +99,81 @@ public class AdultMainActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            // Establecer el título
-            getSupportActionBar().setTitle(" Bienvenido");
-
-            // Mostrar el logo en la izquierda del título
-            getSupportActionBar().setLogo(R.drawable.logo); // Asegúrate que logo.png o .svg esté en res/drawable/
+            getSupportActionBar().setTitle(getString(R.string.adult_main_activity_title));
+            getSupportActionBar().setLogo(R.drawable.logo);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
+
+        FragmentPageAdapter pagerAdapter = new FragmentPageAdapter(this);
+        viewPager.setAdapter(pagerAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    switch (position) {
+                        case 0:
+                            tab.setText(R.string.adult_main_activity_treatment_tab);
+                            break;
+                        case 1:
+                            tab.setText(R.string.adult_main_activity_calendar_tab);
+                            break;
+                    }
+                }).attach();
+
+        // **Asegúrate de que este `GoogleSignInOptions` tenga el scope de Calendar**
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestScopes(new Scope(CalendarScopes.CALENDAR)) // <--- ¡Esta línea es CRUCIAL!
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // RecyclerView y adaptador
-        RecyclerView recyclerView = findViewById(R.id.treatmentRecyclerView);
-        Map<String, List<Medication>> medicationsMap = new HashMap<>();
-        adapter = new TreatmentAdapter(new ArrayList<>(), medicationsMap, true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-        // Botón para nuevo tratamiento
         FloatingActionButton fab = findViewById(R.id.fabAddTreatment);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(AdultMainActivity.this, NewTreatmentActivity.class);
-            startActivity(intent); // No usamos startActivityForResult ya
+            startActivity(intent);
         });
+
+        // **Lógica para inicializar el servicio de Google Calendar**
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        // Verifica si hay una cuenta de Google logueada Y si tiene el scope de Calendar
+        if (account != null && account.getGrantedScopes().contains(new Scope(CalendarScopes.CALENDAR))) {
+            initializeCalendarService(account);
+        } else {
+            Log.d(TAG, "No Google account or Calendar scope not granted. Calendar functionality might be limited.");
+            Toast.makeText(this, "Para usar el calendario, por favor inicia sesión con Google y acepta los permisos.", Toast.LENGTH_LONG).show();
+        }
     }
 
-    // Siempre que la vista se vuelve visible, recarga la lista
     @Override
     protected void onResume() {
         super.onResume();
-        loadTreatments();
+        SharedPreferences prefs = getSharedPreferences("settings_prefs", MODE_PRIVATE);
+        String savedFontSize = prefs.getString("font_size", "medium");
+
+        float currentFontScale = getResources().getConfiguration().fontScale;
+        float expectedFontScale = 1.0f;
+
+        switch (savedFontSize) {
+            case "small":
+                expectedFontScale = 0.85f;
+                break;
+            case "large":
+                expectedFontScale = 1.3f;
+                break;
+            default: // medium
+                expectedFontScale = 1.0f;
+        }
+
+        if (Math.abs(currentFontScale - expectedFontScale) > 0.001f) {
+            recreate();
+        }
     }
-
-//    private void loadTreatments() {
-//        TreatmentRepository.getActiveTreatmentsForCurrentUser(treatments -> {
-//            adapter.updateList(treatments);
-//        }, e -> {
-//            Toast.makeText(this, "Error al cargar tratamientos", Toast.LENGTH_SHORT).show();
-//        });
-//    }
-private void loadTreatments() {
-    TreatmentRepository.getActiveTreatmentsForCurrentUser(treatments -> {
-        Map<String, List<Medication>> medicationsMap = new HashMap<>();
-
-        if (treatments.isEmpty()) {
-            adapter.updateList(treatments, medicationsMap);
-            return;
-        }
-
-        final int total = treatments.size();
-        final int[] loadedCount = {0};
-
-        for (Treatment treatment : treatments) {
-            MedicationRepository.getMedicationsByTreatmentId(treatment.getTreatmentId(),
-                    meds -> {
-                        medicationsMap.put(treatment.getTreatmentId(), meds);
-                        loadedCount[0]++;
-                        if (loadedCount[0] == total) {
-                            // Cuando se han cargado todos los medicamentos
-                            adapter.updateList(treatments, medicationsMap);
-                        }
-                    },
-                    e -> {
-                        loadedCount[0]++;
-                        if (loadedCount[0] == total) {
-                            adapter.updateList(treatments, medicationsMap);
-                        }
-                        Log.e("loadTreatments", "Error al cargar medicamentos", e);
-                    }
-            );
-        }
-
-    }, e -> {
-        Toast.makeText(this, "Error al cargar tratamientos", Toast.LENGTH_SHORT).show();
-    });
-}
-
 
     @Override
     protected void onStart() {
@@ -183,5 +229,103 @@ private void loadTreatments() {
             return false;
         }
     }
-}
 
+    // 2. Método para inicializar el servicio de Google Calendar
+    private void initializeCalendarService(GoogleSignInAccount account) {
+        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
+                this, Collections.singleton(CalendarScopes.CALENDAR));
+        credential.setSelectedAccount(account.getAccount());
+
+        mCalendarService = new Calendar.Builder(
+                AndroidHttp.newCompatibleTransport(),
+                GsonFactory.getDefaultInstance(),
+                credential)
+                .setApplicationName("SaludAlDia") // Asegúrate de que este nombre sea descriptivo
+                .build();
+
+        Log.d(TAG, "Google Calendar service initialized successfully in AdultMainActivity.");
+        mainHandler.post(() -> Toast.makeText(this, "Servicio de Calendar inicializado.", Toast.LENGTH_SHORT).show());
+
+        // Una vez que el servicio está listo, verificar/crear el calendario de la app
+        checkOrCreateAppCalendar();
+    }
+
+    // 3. Método para buscar o crear el calendario de la app
+    private void checkOrCreateAppCalendar() {
+        if (mCalendarService == null) {
+            Log.e(TAG, "Calendar service not initialized. Cannot check or create app calendar.");
+            if (listCalendarEventsListener != null) {
+                listCalendarEventsListener.onCalendarServiceError("Servicio de calendario no inicializado.");
+            }
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                String foundCalendarId = null;
+                // Listar calendarios del usuario
+                List<CalendarListEntry> calendarList = mCalendarService.calendarList().list().execute().getItems();
+                if (calendarList != null) {
+                    for (CalendarListEntry entry : calendarList) {
+                        if (APP_CALENDAR_NAME.equals(entry.getSummary())) {
+                            foundCalendarId = entry.getId();
+                            break;
+                        }
+                    }
+                }
+
+                if (foundCalendarId != null) {
+                    appCalendarId = foundCalendarId;
+                    mainHandler.post(() -> {
+                        Toast.makeText(AdultMainActivity.this, "Calendario '" + APP_CALENDAR_NAME + "' encontrado.", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Found app calendar with ID: " + appCalendarId);
+                        // 4. Notificar al listener (CalendarFragment) que el servicio está listo
+                        if (listCalendarEventsListener != null) {
+                            listCalendarEventsListener.onCalendarServiceReady(mCalendarService, appCalendarId);
+                        }
+                    });
+                } else {
+                    // Si no se encuentra, crear uno nuevo
+                    com.google.api.services.calendar.model.Calendar newCalendar = new com.google.api.services.calendar.model.Calendar();
+                    newCalendar.setSummary(APP_CALENDAR_NAME);
+                    // Establecer la zona horaria del dispositivo para el nuevo calendario
+                    newCalendar.setTimeZone(java.util.TimeZone.getDefault().getID());
+
+                    com.google.api.services.calendar.model.Calendar createdCalendar = mCalendarService.calendars().insert(newCalendar).execute();
+                    appCalendarId = createdCalendar.getId();
+
+                    mainHandler.post(() -> {
+                        Toast.makeText(AdultMainActivity.this, "Calendario '" + APP_CALENDAR_NAME + "' creado exitosamente.", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Created new app calendar with ID: " + appCalendarId);
+                        // 4. Notificar al listener (CalendarFragment) que el servicio está listo
+                        if (listCalendarEventsListener != null) {
+                            listCalendarEventsListener.onCalendarServiceReady(mCalendarService, appCalendarId);
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Error accessing Calendar API to check/create calendar: " + e.getMessage());
+                final String errorMessage = "Error al gestionar el calendario de la app: " + e.getMessage();
+                mainHandler.post(() -> {
+                    Toast.makeText(AdultMainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                    if (listCalendarEventsListener != null) {
+                        listCalendarEventsListener.onCalendarServiceError(errorMessage);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Asegúrate de apagar el executorService cuando la Activity se destruye
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+        // Limpia el listener si la Activity se destruye mientras el Fragment está activo
+        if (listCalendarEventsListener != null) {
+            listCalendarEventsListener = null;
+        }
+    }
+}

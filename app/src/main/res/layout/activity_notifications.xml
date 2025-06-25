@@ -12,7 +12,7 @@
         android:id="@+id/tvNotifications"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lista de notificaciones"
+        android:text="@string/notifications_activity_list_notifications"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"

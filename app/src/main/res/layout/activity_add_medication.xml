@@ -12,7 +12,7 @@
         android:id="@+id/tvNewMedication"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Datos del medicamento"
+        android:text="@string/new_medication_activity_subtitle"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"
@@ -35,23 +35,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Nombre"/>
+            android:text="@string/new_medication_activity_name"/>
         <EditText
             android:id="@+id/etMedicationName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="paracetamol" />
+            android:hint="@string/new_medication_activity_name_hint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Dosis"/>
+            android:text="@string/new_medication_activity_dose"/>
         <EditText
             android:id="@+id/etMedicationDose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="1 pastilla (500mg)" />
+            android:hint="@string/new_medication_activity_dose_hint" />
 
         <TextView
             android:layout_width="match_parent"
@@ -64,30 +64,30 @@
             android:layout_height="wrap_content"
             android:hint="En ayunas" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
-            android:text="Estado"
-            android:layout_marginBottom="8dp"/>
-        <Switch
-            android:id="@+id/switchActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Activo"
-            android:layout_marginBottom="48dp"/>
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold|italic"-->
+<!--            android:text="Estado"-->
+<!--            android:layout_marginBottom="8dp"/>-->
+<!--        <Switch-->
+<!--            android:id="@+id/switchActive"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Activo"-->
+<!--            android:layout_marginBottom="48dp"/>-->
 
         <Button
             android:id="@+id/btnSaveMedication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar" />
+            android:text="@string/new_medication_activity_buton_save" />
 
         <Button
             android:id="@+id/btnCancelMedication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancelar" />
+            android:text="@string/new_medication_activity_buton_cancel" />
 
     </LinearLayout>
 

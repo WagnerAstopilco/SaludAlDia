@@ -17,7 +17,7 @@
         android:id="@+id/tvMedicationDetails"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Datos del medicamento"
+        android:text="@string/medication_details_activity_subtitle"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"
@@ -45,23 +45,38 @@
             android:padding="16dp">
 
             <!-- Medicamento -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"
+                android:text="@string/medication_details_activity_name"/>
             <EditText
                 android:id="@+id/etName"
-                android:hint="Nombre"
+                android:hint="@string/medication_details_activity_name_hint"
                 android:enabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"
+                android:text="@string/medication_details_activity_dose"/>
             <EditText
                 android:id="@+id/etDose"
-                android:hint="Dosis"
+                android:hint="@string/medication_details_activity_dose_hint"
                 android:enabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"
+                android:text="@string/medication_details_activity_annotations"/>
             <EditText
                 android:id="@+id/etNotes"
-                android:hint="Notas"
+                android:hint="@string/medication_details_activity_annotations_hint"
                 android:enabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -76,20 +91,20 @@
 
                 <Button
                     android:id="@+id/btnEditMedication"
-                    android:text="Editar"
+                    android:text="@string/new_medication_activity_buton_edit_medication"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnSaveMedication"
-                    android:text="Guardar"
+                    android:text="@string/new_medication_activity_buton_edit_save"
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/btnCancelMedication"
-                    android:text="Cancelar"
+                    android:text="@string/new_medication_activity_buton_edit_cancel"
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -100,7 +115,7 @@
                 android:id="@+id/tvReminderDataLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Datos del recordatorio"
+                android:text="@string/medication_details_activity_reminder_data"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:paddingBottom="8dp" />
@@ -109,7 +124,7 @@
                 android:id="@+id/tvReminderInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sin recordatorio"
+                android:text="@string/medication_details_activity_reminder_no_data"
                 android:paddingBottom="8dp" />
             <LinearLayout
                 android:id="@+id/reminderInfoLayout"
@@ -122,38 +137,38 @@
                     android:id="@+id/tvStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Inicio: "
+                    android:text="@string/medication_details_activity_reminder_start_date"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fin: " />
+                    android:text="@string/medication_details_activity_reminder_end_date" />
 
                 <TextView
                     android:id="@+id/tvRecurring"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recurrente: " />
+                    android:text="@string/medication_details_activity_reminder_repetitive" />
 
                 <TextView
                     android:id="@+id/tvFrequency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Frecuencia: " />
+                    android:text="@string/medication_details_activity_reminder_frecuency" />
 
                 <TextView
                     android:id="@+id/tvHours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Horas: " />
+                    android:text="@string/medication_details_activity_reminder_scheduled_hours" />
 
                 <TextView
                     android:id="@+id/tvDays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Días: " />
+                    android:text="@string/medication_details_activity_reminder_scheduled_days" />
 
             </LinearLayout>
 
@@ -162,7 +177,7 @@
                 android:id="@+id/btnEditReminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar Recordatorio" />
+                android:text="@string/medication_details_activity_reminder_button_edit" />
 
         </LinearLayout>
     </ScrollView>

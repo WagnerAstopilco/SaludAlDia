@@ -50,7 +50,7 @@ public class MedicationDetailsActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Detalles del medicamento");
+            getSupportActionBar().setTitle(getString(R.string.medication_details_activity_title));
         }
 
         medicationId = getIntent().getStringExtra("medicationId");

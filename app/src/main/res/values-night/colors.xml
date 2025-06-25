@@ -5,4 +5,5 @@
     <color name="medication_reminder_tint">#7C4F00</color>
     <color name="medication_delete_tint">#9E0000</color>
     <color name="spinnerLanguage">#FFFFFF</color>
+    <color name="your_event_dot_color">#BFB151</color>
 </resources>

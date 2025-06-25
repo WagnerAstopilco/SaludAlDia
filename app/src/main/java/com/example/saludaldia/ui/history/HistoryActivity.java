@@ -20,7 +20,7 @@ public class HistoryActivity extends AppCompatActivity {
         AdultToolbar.setup(this);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Historial");
+            getSupportActionBar().setTitle(getString(R.string.history_activity_title));
         }
     }
 }

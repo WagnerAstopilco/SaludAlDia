@@ -11,7 +11,7 @@
         android:id="@+id/tvTreatments"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lista de tratamientos"
+        android:text="@string/treatments_activity_list"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"
@@ -40,5 +40,5 @@
         app:tint="@android:color/white"
         app:backgroundTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

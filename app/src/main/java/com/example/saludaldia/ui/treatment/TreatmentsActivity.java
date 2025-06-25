@@ -34,7 +34,7 @@ public class TreatmentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_treatments);
         AdultToolbar.setup(this);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Tratamientos");
+            getSupportActionBar().setTitle(getString(R.string.treatments_activity_title));
         }
 
         // RecyclerView y adaptador

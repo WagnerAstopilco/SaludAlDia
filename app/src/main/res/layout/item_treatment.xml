@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Nombre del tratamiento"
+                android:text="@string/medication_item_activity_name"
                 android:textStyle="bold"
                 android:textSize="18sp" />
 
@@ -38,9 +38,10 @@
                 android:id="@+id/switchTreatmentState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Activo"
+                android:text="@string/treatment_item_activity_active"
                 android:focusable="false"
                 android:focusableInTouchMode="false" />
+
         </LinearLayout>
 
         <!-- Fechas -->
@@ -48,7 +49,7 @@
             android:id="@+id/tvDurationLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Duración del tratamiento"
+            android:text="@string/treatment_item_activity_duration"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
@@ -56,7 +57,7 @@
             android:id="@+id/tvTreatmentDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inicio: 2024-01-01 - Fin: 2024-12-31"
+            android:text="@string/treatment_item_activity_time"
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
 
@@ -65,7 +66,7 @@
             android:id="@+id/tvDescriptionLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descripción"
+            android:text="@string/treatment_item_activity_description"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
@@ -73,7 +74,7 @@
             android:id="@+id/tvTreatmentDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descripción del tratamiento"
+            android:text="@string/treatment_item_activity_description_hint"
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
 
@@ -82,7 +83,7 @@
             android:id="@+id/tvMedicationListLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medicamentos del tratamiento"
+            android:text="@string/treatment_item_activity_list_medications"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp" />
@@ -90,7 +91,7 @@
             android:id="@+id/tvMedicationsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medicamento 1 - Dosis 1\nMedicamento 2 - Dosis 2"
+            android:text="@string/treatment_item_activity_list_example"
             android:textSize="14sp" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,7 +102,7 @@
                 android:id="@+id/btnDeleteTreatment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Eliminar tratamiento"
+                android:text="@string/treatment_item_activity_button_delete_treatment"
                 android:textColor="@android:color/white"
                 android:backgroundTint="@android:color/holo_red_light" />
         </LinearLayout>

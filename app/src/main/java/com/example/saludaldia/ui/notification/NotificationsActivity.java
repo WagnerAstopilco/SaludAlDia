@@ -16,7 +16,7 @@ public class NotificationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notifications);
         AdultToolbar.setup(this);
         if (this.getSupportActionBar() != null) {
-            this.getSupportActionBar().setTitle("Notificaciones");
+            this.getSupportActionBar().setTitle(getString(R.string.notifications_activity_title));
         }
     }
 }

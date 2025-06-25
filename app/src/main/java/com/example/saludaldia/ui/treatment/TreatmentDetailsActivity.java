@@ -56,7 +56,7 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
 
         AdultToolbar.setup(this);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Tratamiento");
+            getSupportActionBar().setTitle(getString(R.string.treatment_details_activity_title));
         }
 
         db = FirebaseFirestore.getInstance();

@@ -1,6 +1,9 @@
 package com.example.saludaldia.ui.adult;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,8 @@ import com.example.saludaldia.ui.notification.NotificationsActivity;
 import com.example.saludaldia.ui.setting.SettingsActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.example.saludaldia.ui.treatment.TreatmentsActivity;
+import com.example.saludaldia.utils.FontScaleContextWrapper;
+import com.example.saludaldia.utils.LanguageManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,6 +39,16 @@ public class AdultProfileActivity extends AppCompatActivity {
     private Button btnTreatments, btnHistory, btnSave, btnCancel;
 
     private ImageButton btnEdit;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences prefs = newBase.getSharedPreferences("settings_prefs", MODE_PRIVATE);
+        String currentFontSize = prefs.getString("font_size", "medium");
+
+        Context contextForFont = FontScaleContextWrapper.wrap(newBase);
+
+        super.attachBaseContext(contextForFont);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +56,7 @@ public class AdultProfileActivity extends AppCompatActivity {
         setContentView(R.layout.adult_profile);
         AdultToolbar.setup(this);
         if (this.getSupportActionBar() != null) {
-            this.getSupportActionBar().setTitle("Perfil de usuario");
+            this.getSupportActionBar().setTitle(getString(R.string.adult_profile_activity_title));
         }
 
         edtNames = findViewById(R.id.edtNames);
@@ -69,6 +84,32 @@ public class AdultProfileActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(V -> enableEditing(false));
         loadUserProfile();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = getSharedPreferences("settings_prefs", MODE_PRIVATE);
+        String savedFontSize = prefs.getString("font_size", "medium");
+
+        float currentFontScale = getResources().getConfiguration().fontScale;
+        float expectedFontScale = 1.0f;
+
+        switch (savedFontSize) {
+            case "small":
+                expectedFontScale = 0.85f;
+                break;
+            case "large":
+                expectedFontScale = 1.3f;
+                break;
+            default: // medium
+                expectedFontScale = 1.0f;
+        }
+
+        if (Math.abs(currentFontScale - expectedFontScale) > 0.001f) {
+            recreate();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

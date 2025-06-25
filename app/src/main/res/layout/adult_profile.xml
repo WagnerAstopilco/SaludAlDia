@@ -32,7 +32,7 @@
                     android:layout_width="639dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Datos personales"
+                    android:text="@string/adult_profile_personal_data"
                     android:textSize="24sp"
                     android:textStyle="bold"/>
 
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombres"
+                android:text="@string/adult_profile_names"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -58,14 +58,14 @@
                 android:id="@+id/edtNames"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombres"
+                android:text="@string/adult_profile_names"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellidos"
+                android:text="@string/adult_profile_lastnames"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -73,14 +73,14 @@
                 android:id="@+id/edtLastNames"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apellidos"
+                android:text="@string/adult_profile_lastnames"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Correo"
+                android:text="@string/adult_profile_email"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -88,7 +88,7 @@
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Correo"
+                android:text="@string/adult_profile_email"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
@@ -96,7 +96,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Teléfono"
+                android:text="@string/adult_profile_phone"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -104,14 +104,14 @@
                 android:id="@+id/edtPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teléfono"
+                android:text="@string/adult_profile_phone"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edad"
+                android:text="@string/adult_profile_age"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -119,14 +119,14 @@
                 android:id="@+id/edtAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edad"
+                android:text="@string/adult_profile_age"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Peso"
+                android:text="@string/adult_profile_weight"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -134,14 +134,14 @@
                 android:id="@+id/edtWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Peso"
+                android:text="@string/adult_profile_weight"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alergias"
+                android:text="@string/adult_profile_allergies"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -149,7 +149,7 @@
                 android:id="@+id/edtAllergies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alergias"
+                android:text="@string/adult_profile_allergies"
                 android:textSize="16sp"
                 android:paddingBottom="8dp" />
 
@@ -163,14 +163,14 @@
                     android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Guardar"
+                    android:text="@string/save_button_adult_profile"
                     android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancelar"
+                    android:text="@string/cancel_button_adult_profile"
                     android:visibility="gone"/>
             </LinearLayout>
 
@@ -178,13 +178,13 @@
                 android:id="@+id/btnTreatments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tratamientos" />
+                android:text="@string/treatments_button_adult_profile" />
 
             <Button
                 android:id="@+id/btnHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Historial" />
+                android:text="@string/history_button_adult_profile" />
 
         </LinearLayout>
 

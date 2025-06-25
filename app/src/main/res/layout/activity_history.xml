@@ -12,7 +12,7 @@
         android:id="@+id/tvHistory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Lista de eventos del usuario"
+        android:text="@string/history_activity_subtitle"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"

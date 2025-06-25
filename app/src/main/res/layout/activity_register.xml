@@ -27,7 +27,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:text="Registro de usuario"
+            android:text="@string/register_activity_title"
             android:textColor="@color/black" />
         <TextView
             android:id="@+id/txtNamesLabel"
@@ -35,13 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textStyle="bold|italic"
-            android:text="Nombres"
+            android:text="@string/register_activity_names"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/edtNames"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombres"
+            android:hint="@string/register_activity_names_hint"
             android:inputType="textPersonName" />
 
         <TextView
@@ -50,13 +50,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textStyle="bold|italic"
-            android:text="Correo"
+            android:text="@string/register_activity_email"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="alguien@correo.com"
+            android:hint="@string/register_activity_email_hint"
             android:inputType="textEmailAddress"
             android:layout_marginTop="12dp" />
 
@@ -66,13 +66,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textStyle="bold|italic"
-            android:text="Contraseña"
+            android:text="@string/register_activity_password"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/register_activity_password_hint"
             android:inputType="textPassword"
             android:layout_marginTop="12dp" />
 
@@ -82,20 +82,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textStyle="bold|italic"
-            android:text="Confirmar Contraseña"
+            android:text="@string/register_activity_password_confirm"
             android:textColor="@color/black" />
         <EditText
             android:id="@+id/edtConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirmar contraseña"
+            android:hint="@string/register_activity_password_confirm_hint"
             android:inputType="textPassword"
             android:layout_marginTop="12dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selecciona tu rol"
+            android:text="@string/register_activity_select_role"
             android:textSize="16sp"
             android:textStyle="bold"
             />
@@ -111,13 +111,13 @@
                 android:id="@+id/radioAdulto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Adulto Mayor"/>
+                android:text="@string/register_activity_role_older_adult"/>
 
             <RadioButton
                 android:id="@+id/radioCuidador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cuidador"/>
+                android:text="@string/register_activity_role_caregiver"/>
         </RadioGroup>
 
         <Button
@@ -125,7 +125,7 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:text="Registrar"
+            android:text="@string/register_activity_button_signin"
             android:layout_marginTop="20dp" />
 
         <Button
@@ -133,7 +133,7 @@
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:text="Volver "
+            android:text="@string/register_activity_button_return"
             android:layout_marginTop="10dp" />
     </LinearLayout>
 </ScrollView>

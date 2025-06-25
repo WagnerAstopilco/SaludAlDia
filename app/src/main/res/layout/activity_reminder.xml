@@ -13,7 +13,7 @@
         android:id="@+id/tvReminderLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Datos del recordatorio"
+        android:text="@string/reminder_activity_subtitle"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"
@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha de inicio del recordatorio"
+                android:text="@string/reminder_activity_start_date"
                 android:textStyle="bold" />
 
             <EditText
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha de fin"
+                android:text="@string/reminder_activity_end_date"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
@@ -76,14 +76,14 @@
                 android:id="@+id/chkRecurring"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿Es repetitivo?"
+                android:text="@string/reminder_activity_repetitive"
                 android:layout_marginTop="16dp" />
 
             <!-- Frecuencia -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Frecuencia"
+                android:text="@string/reminder_activity_frecuency"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp" />
 
@@ -108,49 +108,49 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipMonday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Lun"
+                    android:text="@string/reminder_activity_monday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTuesday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Mar"
+                    android:text="@string/reminder_activity_tuesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipWednesday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Mié"
+                    android:text="@string/reminder_activity_wednesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipThursday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Jue"
+                    android:text="@string/reminder_activity_thursday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipFriday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Vie"
+                    android:text="@string/reminder_activity_friday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipSaturday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Sáb"
+                    android:text="@string/reminder_activity_saturday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipSunday"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Dom"
+                    android:text="@string/reminder_activity_sunday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -161,7 +161,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Horarios"
+                android:text="@string/reminder_activity_schedules"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
@@ -172,14 +172,14 @@
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp"
-                android:text="No hay horarios seleccionados" />
+                android:text="@string/reminder_activity_no_schedules" />
 
             <!-- Botón para añadir hora -->
             <Button
                 android:id="@+id/btnAddHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Añadir hora"
+                android:text="@string/reminder_activity_add_time"
                 android:layout_marginTop="8dp" />
 
             <!-- Botón guardar -->
@@ -187,7 +187,7 @@
                 android:id="@+id/btnSaveReminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guardar recordatorio"
+                android:text="@string/reminder_activity_button_save"
                 android:layout_marginTop="24dp"
                 android:backgroundTint="@color/purple_500"
                 android:textColor="@android:color/white" />
@@ -195,7 +195,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
+                android:text="@string/reminder_activity_button_cancel"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@android:color/darker_gray"
                 android:textColor="@android:color/white" />
