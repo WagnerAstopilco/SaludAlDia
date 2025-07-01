@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.ui.adult.AdultMainActivity;
 import com.example.saludaldia.ui.caregiver.CaregiverMainActivity;
@@ -46,7 +44,6 @@ public class SelectRoleActivity extends AppCompatActivity {
     private void asignarRol(String rol) {
         String uid = mAuth.getCurrentUser().getUid();
 
-        // Actualizamos el campo 'role' en Firestore
         db.collection("users").document(uid)
                 .update("role", rol)
                 .addOnSuccessListener(unused -> {

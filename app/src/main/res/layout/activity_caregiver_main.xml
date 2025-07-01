@@ -7,5 +7,56 @@
     android:layout_height="match_parent"
     tools:context=".ui.caregiver.CaregiverMainActivity">
 
-    <include layout="@layout/caregiver_toolbar"/>
+    <include layout="@layout/caregiver_toolbar" />
+
+    <TextView
+    android:id="@+id/tvLinkedUsersTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:text="@string/caregiver_main_activity_subtitle"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar_caregiver" />
+
+    <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvLinkedUsers"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="8dp"
+    android:paddingBottom="16dp"
+    android:clipToPadding="false"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tvLinkedUsersTitle"
+    tools:listitem="@layout/item_linked_user" />
+
+    <TextView
+    android:id="@+id/tvNoLinkedUsers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/caregiver_main_activity_null_linked_users"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="@id/rvLinkedUsers"
+    app:layout_constraintEnd_toEndOf="@id/rvLinkedUsers"
+    app:layout_constraintStart_toStartOf="@id/rvLinkedUsers"
+    app:layout_constraintTop_toTopOf="@id/rvLinkedUsers" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabScanQr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="Escanear Código QR"
+        android:src="@drawable/scan_qr"
+        app:tint="@android:color/white"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

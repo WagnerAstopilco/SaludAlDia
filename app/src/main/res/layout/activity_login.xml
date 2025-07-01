@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,57 +28,11 @@
         android:text="@string/login_activity_title"
         android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/txtEmailLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold|italic"
-        android:text="@string/login_activity_email"
-        android:textColor="@color/black" />
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/login_activity_email_hint"
-        android:inputType="textEmailAddress" />
-    <TextView
-        android:id="@+id/txtPassLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold|italic"
-        android:text="@string/login_activity_password"
-        android:textColor="@color/black" />
-    <EditText
-        android:id="@+id/edtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:hint="@string/login_activity_password_hint"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/login_activity_button_login" />
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogleSignIn"
         android:layout_width="160dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/txtRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/login_activity_button_signin"
-        android:textColor="@android:color/holo_blue_dark" />
 
     <TextView
         android:id="@+id/txtRecoverPassword"
@@ -88,7 +41,5 @@
         android:layout_marginTop="16dp"
         android:text="@string/login_activity_button_reset_pass"
         android:textColor="@android:color/holo_blue_dark" />
-
-
 
 </LinearLayout>

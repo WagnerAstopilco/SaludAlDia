@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -29,7 +28,7 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="639dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/adult_profile_personal_data"
@@ -120,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/adult_profile_age"
+                android:inputType="number"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
@@ -135,6 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/adult_profile_weight"
+                android:inputType="number"
                 android:textSize="16sp"
                 android:paddingBottom="8dp"
                 android:enabled="false" />
@@ -151,7 +152,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/adult_profile_allergies"
                 android:textSize="16sp"
-                android:paddingBottom="8dp" />
+                android:paddingBottom="8dp"
+                android:enabled="false"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,28 +165,48 @@
                     android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/save_button_adult_profile"
+                    android:text="@string/adult_profile_button_save"
                     android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cancel_button_adult_profile"
+                    android:text="@string/adult_profile_button_cancel"
                     android:visibility="gone"/>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/adult_profile_qr_code"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:id="@+id/qrImageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:background="@android:color/white"
+                android:contentDescription="Código QR del perfil"
+                android:layout_marginBottom="24dp"/>
 
             <Button
                 android:id="@+id/btnTreatments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/treatments_button_adult_profile" />
+                android:text="@string/adult_profile_button_treatments" />
 
             <Button
                 android:id="@+id/btnHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/history_button_adult_profile" />
+                android:text="@string/adult_profile_button_history" />
 
         </LinearLayout>
 

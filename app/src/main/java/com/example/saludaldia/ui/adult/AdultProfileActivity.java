@@ -2,18 +2,16 @@ package com.example.saludaldia.ui.adult;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.ui.history.HistoryActivity;
 import com.example.saludaldia.ui.notification.NotificationsActivity;
@@ -21,24 +19,25 @@ import com.example.saludaldia.ui.setting.SettingsActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.example.saludaldia.ui.treatment.TreatmentsActivity;
 import com.example.saludaldia.utils.FontScaleContextWrapper;
-import com.example.saludaldia.utils.LanguageManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import android.content.Intent;
 import android.widget.Button;
-
-
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public class AdultProfileActivity extends AppCompatActivity {
+public class AdultProfileActivity extends AppCompatActivity { // Recomiendo cambiar a AdultMainActivity
 
     private EditText edtNames, edtLastNames, edtEmail, edtPhone, edtAge, edtWeight, edtAllergies;
     private Button btnTreatments, btnHistory, btnSave, btnCancel;
-
     private ImageButton btnEdit;
+    private ImageView qrImageView;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         SharedPreferences prefs = newBase.getSharedPreferences("settings_prefs", MODE_PRIVATE);
@@ -47,7 +46,6 @@ public class AdultProfileActivity extends AppCompatActivity {
         Context contextForFont = FontScaleContextWrapper.wrap(newBase);
 
         super.attachBaseContext(contextForFont);
-
     }
 
     @Override
@@ -71,6 +69,7 @@ public class AdultProfileActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
         btnEdit = findViewById(R.id.btnEdit);
+        qrImageView = findViewById(R.id.qrImageView);
 
         btnTreatments.setOnClickListener(v -> {
             startActivity(new Intent(this, TreatmentsActivity.class));
@@ -83,7 +82,10 @@ public class AdultProfileActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> updateUserProfile());
         btnCancel.setOnClickListener(V -> enableEditing(false));
         loadUserProfile();
+
+        generateAndDisplayQrCode();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -110,17 +112,15 @@ public class AdultProfileActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.adult_toolbar_menu, menu);
-        MenuItem profileItem = menu.add(Menu.NONE, R.id.settings, Menu.NONE, "Configuraciones");
-        profileItem.setIcon(R.drawable.settings);
-        profileItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        MenuItem settingsItem = menu.add(Menu.NONE, R.id.settings, Menu.NONE, "Configuraciones");
+        settingsItem.setIcon(R.drawable.settings);
+        settingsItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-        MenuItem logoutItem = menu.add(Menu.NONE, R.id.notifications, Menu.NONE, "Notificaciones");
-        logoutItem.setIcon(R.drawable.notifications);
-        logoutItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        MenuItem notificationsItem = menu.add(Menu.NONE, R.id.notifications, Menu.NONE, "Notificaciones");
+        notificationsItem.setIcon(R.drawable.notifications);
+        notificationsItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
         return true;
     }
@@ -143,14 +143,13 @@ public class AdultProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserProfile() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(uid)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Usamos get para obtener campos individuales y manejamos valores nulos
                         String names = documentSnapshot.getString("names");
                         String lastNames = documentSnapshot.getString("lastNames");
                         String email = documentSnapshot.getString("email");
@@ -158,15 +157,13 @@ public class AdultProfileActivity extends AppCompatActivity {
                         Long age = documentSnapshot.getLong("age");
                         Double weight = documentSnapshot.getDouble("weight");
                         List<String> allergies = (List<String>) documentSnapshot.get("allergies");
-                        String role = documentSnapshot.getString("role");
-
                         edtNames.setText(names != null ? names : "");
                         edtLastNames.setText(lastNames != null ? lastNames : "");
                         edtEmail.setText(email != null ? email : "");
                         edtPhone.setText(phone != null ? phone : "");
                         edtAge.setText(age != null ? String.valueOf(age) : "");
-                        edtWeight.setText(weight != null ? weight + " kg" : "");
-                        edtAllergies.setText(allergies != null && !allergies.isEmpty() ? String.join(", ", allergies) : "Ninguna");
+                        edtWeight.setText(weight != null ? String.valueOf(weight) : "");
+                        edtAllergies.setText(allergies != null && !allergies.isEmpty() ? android.text.TextUtils.join(", ", allergies) : "");
                     } else {
                         Toast.makeText(this, "Perfil no encontrado", Toast.LENGTH_SHORT).show();
                     }
@@ -189,18 +186,16 @@ public class AdultProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserProfile() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Obtener valores de los EditText
         String names = edtNames.getText().toString().trim();
         String lastNames = edtLastNames.getText().toString().trim();
         String phone = edtPhone.getText().toString().trim();
         String ageStr = edtAge.getText().toString().trim();
-        String weightStr = edtWeight.getText().toString().trim().replace(" kg", ""); // quitar " kg" si está
+        String weightStr = edtWeight.getText().toString().trim();
         String allergiesStr = edtAllergies.getText().toString().trim();
 
-        // Parsear edad y peso si es posible
         Integer age = null;
         Double weight = null;
         try {
@@ -221,22 +216,24 @@ public class AdultProfileActivity extends AppCompatActivity {
             return;
         }
 
-        // Convertir alergias a lista separada por coma
-        List<String> allergies = List.of();
-        if (!allergiesStr.isEmpty() && !allergiesStr.equalsIgnoreCase("Ninguna")) {
-            allergies = List.of(allergiesStr.split("\\s*,\\s*")); // split por coma y espacio
+        List<String> allergies = new ArrayList<>();
+        if (!allergiesStr.isEmpty()) {
+            String[] allergyArray = allergiesStr.split("\\s*,\\s*");
+            for (String allergy : allergyArray) {
+                if (!allergy.trim().isEmpty()) {
+                    allergies.add(allergy.trim());
+                }
+            }
         }
 
-        // Crear mapa con los campos a actualizar
         Map<String, Object> updates = new HashMap<>();
         updates.put("names", names);
         updates.put("lastNames", lastNames);
         updates.put("phoneNumber", phone);
-        if (age != null) updates.put("age", age);
-        if (weight != null) updates.put("weight", weight);
+        updates.put("age", age);
+        updates.put("weight", weight);
         updates.put("allergies", allergies);
 
-        // Actualizar en Firestore
         db.collection("users").document(uid)
                 .update(updates)
                 .addOnSuccessListener(aVoid -> {
@@ -246,5 +243,27 @@ public class AdultProfileActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error al actualizar perfil: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
+    }
+
+    private void generateAndDisplayQrCode() {
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            try {
+                BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                Bitmap bitmap = barcodeEncoder.encodeBitmap(
+                        userId,
+                        BarcodeFormat.QR_CODE,
+                        400,
+                        400
+                );
+                qrImageView.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Toast.makeText(this, "Error al generar el QR.", Toast.LENGTH_SHORT).show();
+                qrImageView.setVisibility(View.GONE);
+            }
+        } else {
+            qrImageView.setVisibility(View.GONE);
+        }
     }
 }

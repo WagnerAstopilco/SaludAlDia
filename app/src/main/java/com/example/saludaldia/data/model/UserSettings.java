@@ -1,10 +1,9 @@
 package com.example.saludaldia.data.model;
 
-
 public class UserSettings {
     private String userId;
-    private String language; // "es", "en", etc.
-    private String fontSize; // "small", "medium", "large"
+    private String language;
+    private String fontSize;
     private boolean notificationSound;
     private boolean darkMode;
     private boolean highContrast;
@@ -26,7 +25,6 @@ public class UserSettings {
         this.largeButtons = largeButtons;
         this.reduceAnimations = reduceAnimations;
     }
-    // Getters y Setters
 
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }

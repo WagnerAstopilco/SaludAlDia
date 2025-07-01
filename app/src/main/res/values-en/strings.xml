@@ -32,7 +32,7 @@
     <string name="app_logo">App logo</string>
     <string name="main_image">Main image</string>
 
-    <!--    TEXTOS SETTINGS ACTIVITY    -->
+    <!--    TEXTS SETTINGS ACTIVITY    -->
     <string name="settingsActivity_title">Settings</string>
     <string name="text_app_preferences">Aplication preferences</string>
     <string name="dark_mode">Dark mode</string>
@@ -54,13 +54,12 @@
         <item>@string/large_display</item>
     </string-array>
     <string name="save_button_settings">Save changes</string>
-
     <string name="restart_app_title">¿Are you sure?</string>
     <string name="restart_app_message">Changing the language requires restarting the app.</string>
     <string name="restart_button">Confirm</string>
     <string name="cancel_button">Cancel</string>
 
-    <!--    TEXTOS ADULT PROFILE ACTIVITY    -->
+    <!--    TEXTS ADULT PROFILE ACTIVITY    -->
     <string name="adult_profile_activity_title">User profile</string>
     <string name="adult_profile_personal_data">Personal data</string>
     <string name="adult_profile_names">Names</string>
@@ -70,17 +69,19 @@
     <string name="adult_profile_age">Age</string>
     <string name="adult_profile_weight">Weight</string>
     <string name="adult_profile_allergies">Allergies</string>
-    <string name="save_button_adult_profile">Save</string>
-    <string name="cancel_button_adult_profile">Cancel</string>
-    <string name="treatments_button_adult_profile">Treatments</string>
-    <string name="history_button_adult_profile">History</string>
+    <string name="adult_profile_qr_code">Profile QR Code</string>
+    <string name="adult_profile_button_save">Save</string>
+    <string name="adult_profile_button_cancel">Cancel</string>
+    <string name="adult_profile_button_treatments">Treatments</string>
+    <string name="adult_profile_button_history">History</string>
+    <string name="adult_profile_toast_profile_not_found">Profile not found</string>
 
-    <!--   TEXTOS ADULT MAIN ACTIVITY  -->
+    <!--   TEXTS ADULT MAIN ACTIVITY  -->
     <string name="adult_main_activity_title"> Welcome</string>
     <string name="adult_main_activity_treatment_tab">Treatments</string>
     <string name="adult_main_activity_calendar_tab">Calendar</string>
 
-    <!--   TEXTOS LOGIN ACTIVITY  -->
+    <!--   TEXTS LOGIN ACTIVITY  -->
     <string name="login_activity_title">Login</string>
     <string name="login_activity_email">Email</string>
     <string name="login_activity_email_hint">example@email.com</string>
@@ -90,12 +91,12 @@
     <string name="login_activity_button_signin">¿Don\'t have a account? Regíster</string>
     <string name="login_activity_button_reset_pass">¿Forgot your password?</string>
 
-    <!--   TEXTOS SELECT ROLE ACTIVITY  -->
+    <!--   TEXTS SELECT ROLE ACTIVITY  -->
     <string name="select_role_activity_title">Select role</string>
     <string name="select_role_activity_role_older_adult">I\'m an older adult</string>
     <string name="select_role_activity_role_caregiver">I\'m a Caregiver</string>
 
-    <!--   TEXTOS REGISTER ACTIVITY  -->
+    <!--   TEXTS REGISTER ACTIVITY  -->
     <string name="register_activity_title">User registration</string>
     <string name="register_activity_names">Names</string>
     <string name="register_activity_names_hint">Juan Carlos</string>
@@ -112,18 +113,18 @@
     <string name="register_activity_button_signin">Register</string>
     <string name="register_activity_button_return">Return</string>
 
-    <!--   TEXTOS RECOVER PASS ACTIVITY  -->
+    <!--   TEXTS RECOVER PASS ACTIVITY  -->
     <string name="recover_activity_title">Reset password</string>
     <string name="recover_activity_email">email</string>
     <string name="recover_activity_email_hint">example@email.com</string>
     <string name="recover_activity_button_send_link">Send request</string>
     <string name="recover_activity_button_return">Return</string>
 
-    <!--   TEXTOS NOTIFICATIONS ACTIVITY  -->
+    <!--   TEXTS NOTIFICATIONS ACTIVITY  -->
     <string name="notifications_activity_title">Notifications</string>
     <string name="notifications_activity_list_notifications">List of notifications</string>
 
-    <!--   TEXTOS NEW TREATMENT ACTIVITY  -->
+    <!--   TEXTS NEW TREATMENT ACTIVITY  -->
     <string name="new_treatment_activity_title">New treatment</string>
     <string name="new_treatment_ativity_treatment_data">Treatment data</string>
     <string name="new_treatment_ativity_name">Name</string>
@@ -136,12 +137,13 @@
     <string name="new_treatment_ativity_description_hint">Treatment to stabilize blood glucose</string>
     <string name="new_treatment_ativity_button_state">State</string>
     <string name="new_treatment_ativity_button_save_treatment">Save treatment</string>
+    <string name="new_treatment_ativity_treatment_save">Saved treatment</string>
 
-    <!--   TEXTOS TREATMENTS ACTIVITY  -->
+    <!--   TEXTS TREATMENTS ACTIVITY  -->
     <string name="treatments_activity_title">Treatments</string>
     <string name="treatments_activity_list">List of treatments</string>
 
-    <!--   TEXTOS TREATMENT DETAILS ACTIVITY  -->
+    <!--   TEXTS TREATMENT DETAILS ACTIVITY  -->
     <string name="treatment_details_activity_title">Treatment</string>
     <string name="treatments_details_activity_data">Treatment details</string>
     <string name="treatments_details_activity_name">Treatment name</string>
@@ -154,7 +156,7 @@
     <string name="treatments_details_activity_button_cancel">Cancel</string>
     <string name="treatments_details_activity_list_medications">List of medications</string>
 
-    <!--   TEXTOS REMINDER ACTIVITY  -->
+    <!--   TEXTS REMINDER ACTIVITY  -->
     <string name="reminder_activity_title">Reminder</string>
     <string name="reminder_activity_subtitle">Reminder data</string>
     <string name="reminder_activity_start_date">Start date</string>
@@ -174,34 +176,49 @@
     <string name="reminder_activity_button_save">Save reminder</string>
     <string name="reminder_activity_button_cancel">Cancel</string>
 
-    <!--   TEXTOS HISTORY ACTIVITY  -->
+    <!--   TEXTS HISTORY ACTIVITY  -->
     <string name="history_activity_title">History</string>
     <string name="history_activity_subtitle">List of user events</string>
+    <string name="history_activity_null_events">No events in history</string>
 
-    <!--   TEXTOS NEW MEDICATION ACTIVITY  -->
+    <!--   TEXTS NEW MEDICATION ACTIVITY  -->
     <string name="new_medication_activity_title">New medicament</string>
     <string name="new_medication_activity_subtitle">Medication data</string>
     <string name="new_medication_activity_name">Name</string>
     <string name="new_medication_activity_name_hint">Paracetamol</string>
+    <string name="new_medication_activity_presentation">Presentation</string>
+    <string name="new_medication_activity_presentation_hint">Syrup</string>
     <string name="new_medication_activity_dose">Dose</string>
     <string name="new_medication_activity_dose_hint">1 tablet (500mg)</string>
+    <string name="new_medication_activity_via">Via</string>
+    <string name="new_medication_activity_via_hint">Oral</string>
+    <string name="new_medication_activity_number_of_days">N° of days</string>
+    <string name="new_medication_activity_number_of_days_hint">2</string>
     <string name="new_medication_activity_annotations">Annotations</string>
     <string name="new_medication_activity_annotations_hint">On an empty stomach</string>
+    <string name="new_medication_activity_state">State</string>
     <string name="new_medication_activity_buton_save">Save</string>
     <string name="new_medication_activity_buton_cancel">Cancel</string>
 
-    <!--   TEXTOS MEDICATION DETAILS ACTIVITY  -->
+    <!--   TEXTS MEDICATION DETAILS ACTIVITY  -->
     <string name="medication_details_activity_title">Medicament details</string>
     <string name="medication_details_activity_subtitle">Medication data</string>
     <string name="medication_details_activity_name">Name</string>
     <string name="medication_details_activity_name_hint">Paracetamol</string>
+    <string name="medication_details_activity_presentation">Presentation</string>
+    <string name="medication_details_activity_presentation_hint">Syrup</string>
     <string name="medication_details_activity_dose">Dose</string>
     <string name="medication_details_activity_dose_hint">1 tablet (500mg)</string>
+    <string name="medication_details_activity_via">Via</string>
+    <string name="medication_details_activity_via_hint">Oral</string>
+    <string name="medication_details_activity_number_of_days">N° of days</string>
+    <string name="medication_details_activity_number_of_days_hint">2</string>
     <string name="medication_details_activity_annotations">Annotations</string>
     <string name="medication_details_activity_annotations_hint">On an empty stomach</string>
-    <string name="new_medication_activity_buton_edit_medication">Edit</string>
-    <string name="new_medication_activity_buton_edit_save">Save</string>
-    <string name="new_medication_activity_buton_edit_cancel">Cancel</string>
+    <string name="medication_details_activity_state">State</string>
+    <string name="medication_details_activity_buton_edit_medication">Edit</string>
+    <string name="medication_details_activity_buton_edit_save">Save</string>
+    <string name="medication_details_activity_buton_edit_cancel">Cancel</string>
     <string name="medication_details_activity_reminder_data">Reminder data</string>
     <string name="medication_details_activity_reminder_no_data">No scheduled reminder</string>
     <string name="medication_details_activity_reminder_start_date">Start: </string>
@@ -212,11 +229,11 @@
     <string name="medication_details_activity_reminder_scheduled_days">Days: </string>
     <string name="medication_details_activity_reminder_button_edit">Edit</string>
 
-    <!--   TEXTOS MEDICATION ITEM ACTIVITY  -->
+    <!--   TEXTS MEDICATION ITEM ACTIVITY  -->
     <string name="medication_item_activity_name">Name</string>
     <string name="medication_item_activity_dose">Dose</string>
 
-    <!--   TEXTOS TREATMENT ITEM ACTIVITY  -->
+    <!--   TEXTS TREATMENT ITEM ACTIVITY  -->
     <string name="treatment_item_activity_name">Treatment name</string>
     <string name="treatment_item_activity_active">Active</string>
     <string name="treatment_item_activity_duration">Treatment duration</string>
@@ -226,4 +243,59 @@
     <string name="treatment_item_activity_list_medications">Treatment medications</string>
     <string name="treatment_item_activity_list_example">Medication 1 - Dose 1\nMedication 2 - Dose 2</string>
     <string name="treatment_item_activity_button_delete_treatment">Treatment delete</string>
+
+    <!--    TEXTS ITEM NOTIFICATION-->
+    <string name="item_notification_title">Notification title</string>
+    <string name="item_notification_message">Detailed notification message</string>
+    <string name="item_notification_date">Date and Time</string>
+    <string name="item_notification_state">State</string>
+
+    <!--    TEXTS ITEM LINKED USER-->
+    <string name="item_linked_user_names">User name</string>
+    <string name="item_linked_user_email">example@email.com</string>
+    <string name="item_linked_user_button_treatments">Treatments</string>
+    <string name="item_linked_user_button_notifications">Notifications</string>
+
+    <!--    TEXTS ITEM HISTORY EVENT-->
+    <string name="item_history_event_type">Event type</string>
+    <string name="item_history_event_details">Details</string>
+    <string name="item_history_event_date">Date and Time</string>
+    <string name="item_history_event_symptom">Symptom</string>
+    <string name="item_history_event_reminders">Associated reminders</string>
+
+    <!--    TEXTS EVENT-->
+    <string name="item_event_title">Event type</string>
+    <string name="item_event_description">Description</string>
+    <string name="item_event_start_date">Start date</string>
+
+    <!--    TEXTS CALENDAR FRAGMENT-->
+    <string name="calendar_fragment_select_date">Select a date to view events</string>
+
+    <!--    TEXTS CAREGIVER PROFILE-->
+    <string name="caregiver_activity_qr_code">Profile QR Code</string>
+
+    <!--    TEXTS OCR CAPTURE-->
+    <string name="ocr_capture_activity_button_capture">Capture Photo</string>
+    <string name="ocr_capture_activity_button_upload">Upload imagen</string>
+    <string name="ocr_capture_activity_message">Detected text will appear here</string>
+
+    <!--    TEXTS NOTIFICATIONS ACTIVITY-->
+    <string name="notifications_activity_null_notifications">No notifications in history</string>
+
+    <!--    TEXTS CAREGIVER MAIN ACTIVITY-->
+    <string name="caregiver_main_activity_subtitle">List of linked users</string>
+    <string name="caregiver_main_activity_null_linked_users">You don\'t have any linked users yet</string>
+    <string name="caregiver_main_activity_promt_scanner">Scan the user\'s QR code</string>
+    <string name="caregiver_main_activity_permission_scan_denied">Camera permission denied. QR code cannot be scanned.</string>
+    <string name="caregiver_main_activity_login_required">You must log in to link users</string>
+    <string name="caregiver_main_activity_user_linked">This user is already linked</string>
+    <string name="caregiver_main_activity_not_yourself">You can\'t bind yourself</string>
+
+
+    <!--    TEXTS LOGOUT ALERT-->
+    <string name="logout_alert_title">Sign out</string>
+    <string name="logout_alert_message">Are you sure you want to log out?</string>
+    <string name="logout_alert_button_confirm">Yes</string>
+    <string name="logout_alert_button_cancel">Cancel</string>
+    <string name="logout_alert_logout">Successfully logged out</string>
 </resources>

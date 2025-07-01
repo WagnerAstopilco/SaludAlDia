@@ -7,17 +7,19 @@ public class Reminder {
     private String medicationId;
     private Date startDate;
     private Date endDate;
-    private boolean isRecurring;     // Si el recordatorio es repetitivo
-    private String frequency;  // ej. "daily", "weekly", "specific_days"
-    private List<String> days;       // Días de repetición, ej: ["Monday", "Wednesday"]
-    private boolean isActive;        // Estado del recordatorio (activo/inactivo)
-    private List<String> scheduleTimes; // ["08:00", "20:00"]
+    private boolean isRecurring;
+    private String frequency;
+    private List<String> days;
+    private boolean isActive;
+    private List<String> scheduleTimes;
+
+    private List<String> calendarEventIds;
 
     public Reminder() {
 
     }
 
-    public Reminder(String reminderId, String medicationId, Date startDate, Date endDate, boolean isRecurring, String frequency, List<String> days, boolean isActive, List<String> scheduleTimes) {
+    public Reminder(String reminderId, String medicationId, Date startDate, Date endDate, boolean isRecurring, String frequency, List<String> days, boolean isActive, List<String> scheduleTimes, List<String> calendarEventIds) {
         this.reminderId = reminderId;
         this.medicationId = medicationId;
         this.startDate = startDate;
@@ -27,6 +29,7 @@ public class Reminder {
         this.days = days;
         this.isActive = isActive;
         this.scheduleTimes = scheduleTimes;
+        this.calendarEventIds=calendarEventIds;
     }
 
     public String getReminderId() {
@@ -61,11 +64,11 @@ public class Reminder {
         this.endDate = endDate;
     }
 
-    public boolean isRecurring() {
+    public boolean getIsRecurring() {
         return isRecurring;
     }
 
-    public void setRecurring(boolean recurring) {
+    public void setIsRecurring(boolean recurring) {
         isRecurring = recurring;
     }
 
@@ -85,11 +88,11 @@ public class Reminder {
         this.days = days;
     }
 
-    public boolean isActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 
@@ -99,5 +102,13 @@ public class Reminder {
 
     public void setScheduleTimes(List<String> scheduleTimes) {
         this.scheduleTimes = scheduleTimes;
+    }
+
+    public List<String> getCalendarEventIds() {
+        return calendarEventIds;
+    }
+
+    public void setCalendarEventIds(List<String> calendarEventIds) {
+        this.calendarEventIds = calendarEventIds;
     }
 }

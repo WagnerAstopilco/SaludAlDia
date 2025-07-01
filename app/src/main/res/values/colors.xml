@@ -11,6 +11,6 @@
     <color name="medication_details_tint">#2196F3</color>
     <color name="medication_reminder_tint">#FF9800</color>
     <color name="medication_delete_tint">#FF0000</color>
-    <color name="spinnerLanguage">#BAB7B7</color><!-- negro para modo claro -->
+    <color name="spinnerLanguage">#BAB7B7</color>
     <color name="your_event_dot_color">#0E6371</color>
 </resources>

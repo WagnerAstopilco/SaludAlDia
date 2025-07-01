@@ -12,7 +12,7 @@
         android:id="@+id/eventTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Título del evento"
+        android:text="@string/item_event_title"
         android:textStyle="bold"
         android:textSize="16sp" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/eventDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripción"
+        android:text="@string/item_event_description"
         android:textSize="14sp"
         android:textColor="#444444" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/eventStartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hora de inicio"
+        android:text="@string/item_event_start_date"
         android:textSize="14sp"
         android:textColor="#666666" />
 </LinearLayout>

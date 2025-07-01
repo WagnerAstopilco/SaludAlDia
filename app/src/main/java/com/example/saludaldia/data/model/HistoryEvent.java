@@ -1,24 +1,24 @@
 package com.example.saludaldia.data.model;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.util.Date;
 public class HistoryEvent {
     private String eventId;
-    private String historyId;           // Usuario al que pertenece el historial
-    private Date timestamp;      // Fecha y hora del evento
-    private String eventType;        // Tipo de evento: "med_taken", "med_added", "med_edited", "med_deleted", "symptom_reported", etc.
+    private String historyId;
+    @ServerTimestamp
+    private Date timestamp;
+    private String eventType;
     private String details;
-    private Symptom symptom;
 
     public HistoryEvent() {
     }
 
-    public HistoryEvent(String eventId, String historyId, Date timestamp, String eventType, String details, Symptom symptom) {
+    public HistoryEvent(String eventId, String historyId,  String eventType, String details) {
         this.eventId = eventId;
         this.historyId = historyId;
-        this.timestamp = timestamp;
         this.eventType = eventType;
         this.details = details;
-        this.symptom = symptom;
     }
 
     public String getEventId() {
@@ -61,11 +61,5 @@ public class HistoryEvent {
         this.details = details;
     }
 
-    public Symptom getSymptom() {
-        return symptom;
-    }
 
-    public void setSymptom(Symptom symptom) {
-        this.symptom = symptom;
-    }
 }

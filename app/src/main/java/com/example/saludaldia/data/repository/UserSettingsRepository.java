@@ -16,10 +16,7 @@ public class UserSettingsRepository {
         db = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-
-    // Guardar o actualizar configuración
     public void saveUserSettings(UserSettings settings, OnSuccessListener<Void> onSuccess, OnFailureListener onFailure) {
-        // Asegurarse de que el userId esté en el objeto antes de guardar
         settings.setUserId(userId);
 
         DocumentReference docRef = db.collection("userSettings").document(userId);
@@ -27,8 +24,6 @@ public class UserSettingsRepository {
                 .addOnSuccessListener(onSuccess)
                 .addOnFailureListener(onFailure);
     }
-
-    // Obtener configuración del usuario
     public void getUserSettings(OnSuccessListener<UserSettings> onSuccess, OnFailureListener onFailure) {
         DocumentReference docRef = db.collection("userSettings").document(userId);
         docRef.get()
@@ -37,7 +32,7 @@ public class UserSettingsRepository {
                         UserSettings settings = documentSnapshot.toObject(UserSettings.class);
                         onSuccess.onSuccess(settings);
                     } else {
-                        onSuccess.onSuccess(null); // No hay configuración previa
+                        onSuccess.onSuccess(null);
                     }
                 })
                 .addOnFailureListener(onFailure);

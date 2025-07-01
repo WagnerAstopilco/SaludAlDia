@@ -9,5 +9,4 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:titleTextColor="@android:color/white"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:menu="@menu/adult_toolbar_menu"
-    />
+    app:menu="@menu/adult_toolbar_menu"/>

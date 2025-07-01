@@ -2,13 +2,13 @@ package com.example.saludaldia.data.model;
 
 import java.util.Date;
 public class Symptom {
-    private String symptomId;       // ID único
-    private String userId;          // Usuario que reporta
-    private String treatmentId;     // Opcional, tratamiento asociado
-    private String medicationId;    // Opcional, medicamento asociado
+    private String symptomId;
+    private String userId;
+    private String treatmentId;
+    private String medicationId;
     private Date dateReported;
     private String symptomDescription;
-    private String severity;        // Ej: leve, moderado, severo
+    private String severity;
     private String notes;
 
     public Symptom() {

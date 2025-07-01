@@ -1,45 +1,42 @@
 package com.example.saludaldia.ui.medication;
 
+import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.data.model.Medication;
 import com.example.saludaldia.data.model.Reminder;
 import com.example.saludaldia.data.repository.MedicationRepository;
 import com.example.saludaldia.ui.ReminderActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
+import java.util.Objects;
 
 public class MedicationDetailsActivity extends AppCompatActivity {
 
-    private EditText etName, etDose, etNotes;
+    private EditText etName, etDose, etNotes, etPresentation, etVia, etDays;
     private Button btnEditMedication, btnSaveMedication, btnCancelMedication;
-    private TextView tvReminderInfo, tvStartDate , tvEndDate, tvRecurring , tvFrequency,tvHours, tvDays ;
-    private Button btnEditReminder, btnSaveReminder, btnCancelReminder;
-
+    private TextView tvReminderInfo, tvStartDate , tvEndDate, tvRecurring , tvFrequency,tvHours, tvDays, tvState ;
+    private Button btnEditReminder;
+    private LinearLayout reminderInfoLayout;
+    private MaterialCardView reminderCardView;
     private Medication medication;
     private Reminder reminderOriginal;
     private String treatmentId;
-    private String reminderId;
-
     private boolean isEditingMedication = false;
-    private boolean isEditingReminder = false;
 
     private String medicationId;
 
@@ -64,19 +61,28 @@ public class MedicationDetailsActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etDose = findViewById(R.id.etDose);
         etNotes = findViewById(R.id.etNotes);
+        etPresentation=findViewById(R.id.etMedicationPresentation);
+        etVia=findViewById(R.id.etMedicationVia);
+        etDays=findViewById(R.id.etMedicationNumber_of_days);
 
         btnEditMedication = findViewById(R.id.btnEditMedication);
         btnSaveMedication = findViewById(R.id.btnSaveMedication);
         btnCancelMedication = findViewById(R.id.btnCancelMedication);
 
         tvReminderInfo = findViewById(R.id.tvReminderInfo);
+        tvState=findViewById(R.id.txtMedicationState);
         btnEditReminder = findViewById(R.id.btnEditReminder);
+
         tvStartDate = findViewById(R.id.tvStartDate);
         tvEndDate = findViewById(R.id.tvEndDate);
         tvRecurring = findViewById(R.id.tvRecurring);
         tvFrequency = findViewById(R.id.tvFrequency);
         tvHours = findViewById(R.id.tvHours);
         tvDays = findViewById(R.id.tvDays);
+
+        reminderCardView = findViewById(R.id.reminderCardView);
+        reminderInfoLayout = findViewById(R.id.reminderInfoLayout);
+
 
         btnEditMedication.setOnClickListener(v -> toggleMedicationEdit(true));
         btnCancelMedication.setOnClickListener(v -> {
@@ -85,7 +91,7 @@ public class MedicationDetailsActivity extends AppCompatActivity {
         });
         btnSaveMedication.setOnClickListener(v -> saveMedicationChanges());
 
-        btnEditReminder.setOnClickListener(v -> toggleReminderEdit(true));
+        btnEditReminder.setOnClickListener(v -> toggleReminderEdit());
     }
 
     private void loadMedicationData() {
@@ -98,50 +104,57 @@ public class MedicationDetailsActivity extends AppCompatActivity {
                         populateMedicationFields(medication);
                         reminderOriginal = medication.getReminder();
                         displayReminderInfo(reminderOriginal);
-
-                        if (reminderOriginal != null) {
-                            reminderId = reminderOriginal.getReminderId();
-                        }
+                    } else {
+                        Toast.makeText(this, "Medicamento no encontrado.", Toast.LENGTH_SHORT).show();
+                        Log.w(TAG, "Medicamento con ID " + medicationId + " no encontrado.");
+                        finish();
                     }
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error cargando medicamento", Toast.LENGTH_SHORT).show()
-                );
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error cargando medicamento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error cargando medicamento", e);
+                });
     }
 
     private void populateMedicationFields(Medication med) {
         etName.setText(med.getName());
         etDose.setText(med.getDose());
         etNotes.setText(med.getNotes());
+        etPresentation.setText(med.getPresentation());
+        etVia.setText(med.getVia());
+        etDays.setText(String.valueOf(med.getNumber_days()));
+        String state=med.getIsActive()?"Activo":"Inactivo";
+        tvState.setText(state);
     }
 
     private void displayReminderInfo(Reminder reminder) {
-        if (reminder == null) {
-            tvStartDate.setText("Sin recordatorio");
-            tvEndDate.setText("");
-            tvRecurring.setText("");
-            tvFrequency.setText("");
-            tvHours.setText("");
-            tvDays.setText("");
-            return;
-        }
-
-        tvStartDate.setText("Inicio: " + formatDate(reminder.getStartDate()));
-        tvEndDate.setText("Fin: " + formatDate(reminder.getEndDate()));
-        tvRecurring.setText("Recurrente: " + (reminder.isRecurring() ? "Sí" : "No"));
-        tvFrequency.setText("Frecuencia: " + reminder.getFrequency());
-        tvHours.setText("Horas: " + TextUtils.join(", ", reminder.getScheduleTimes()));
-
-        if (reminder.getDays() != null && !reminder.getDays().isEmpty()) {
-            tvDays.setText("Días: " + TextUtils.join(", ", reminder.getDays()));
+        if (reminder == null || reminder.getReminderId() == null) {
+            tvReminderInfo.setText(getString(R.string.medication_details_activity_reminder_no_data));
+            tvReminderInfo.setVisibility(View.VISIBLE);
+            reminderInfoLayout.setVisibility(View.GONE);
         } else {
-            tvDays.setText("Días: N/A");
+            tvReminderInfo.setVisibility(View.GONE);
+            reminderInfoLayout.setVisibility(View.VISIBLE);
+
+            tvStartDate.setText(getString(R.string.medication_details_activity_reminder_start_date)+" " +  formatDate(reminder.getStartDate()));
+            tvEndDate.setText(getString(R.string.medication_details_activity_reminder_end_date)+" "  + formatDate(reminder.getEndDate()));
+            tvRecurring.setText(getString(R.string.medication_details_activity_reminder_repetitive)+" " + (reminder.getIsRecurring() ? "Sí" : "No"));
+            tvFrequency.setText(getString(R.string.medication_details_activity_reminder_frecuency)+" "  + reminder.getFrequency());
+            tvHours.setText(getString(R.string.medication_details_activity_reminder_scheduled_hours)+" " + TextUtils.join(", ", Objects.requireNonNull(reminder.getScheduleTimes())));
+
+            if (reminder.getDays() != null && !reminder.getDays().isEmpty()) {
+                tvDays.setText(getString(R.string.medication_details_activity_reminder_scheduled_days)+" "  + TextUtils.join(", ", reminder.getDays()));
+            } else {
+                tvDays.setText(getString(R.string.medication_details_activity_reminder_scheduled_days)+" " + "TODOS");
+            }
         }
     }
 
 
-    // Helper para formatear fechas (ajústalo según cómo almacenas las fechas)
     private String formatDate(Date date) {
+        if (date == null) {
+            return "N/A";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         return sdf.format(date);
     }
@@ -150,7 +163,10 @@ public class MedicationDetailsActivity extends AppCompatActivity {
     private void toggleMedicationEdit(boolean enable) {
         isEditingMedication = enable;
         etName.setEnabled(enable);
+        etPresentation.setEnabled(enable);
         etDose.setEnabled(enable);
+        etVia.setEnabled(enable);
+        etDays.setEnabled(enable);
         etNotes.setEnabled(enable);
         btnSaveMedication.setVisibility(enable ? View.VISIBLE : View.GONE);
         btnCancelMedication.setVisibility(enable ? View.VISIBLE : View.GONE);
@@ -158,7 +174,19 @@ public class MedicationDetailsActivity extends AppCompatActivity {
     }
 
     private void saveMedicationChanges() {
+        String daysString = etDays.getText().toString();
+        int numberOfDays;
+        try {
+            numberOfDays = Integer.parseInt(daysString);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Por favor, introduce un número válido para los días.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         medication.setName(etName.getText().toString());
+        medication.setPresentation(etPresentation.getText().toString());
+        medication.setVia(etVia.getText().toString());
+        medication.setNumber_days(numberOfDays);
         medication.setDose(etDose.getText().toString());
         medication.setNotes(etNotes.getText().toString());
 
@@ -167,60 +195,53 @@ public class MedicationDetailsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Medicamento actualizado", Toast.LENGTH_SHORT).show();
                     toggleMedicationEdit(false);
                 },
-                e -> Toast.makeText(this, "Error al actualizar", Toast.LENGTH_SHORT).show()
+                e -> Toast.makeText(this, "Error al actualizar: " + e.getMessage(), Toast.LENGTH_SHORT).show()
         );
     }
 
-    private void toggleReminderEdit(boolean enable) {
-            Intent intent = new Intent(this, ReminderActivity.class);
-            intent.putExtra("treatmentId", medication.getTreatmentId());
-            intent.putExtra("medicationId", medication.getMedicationId());
-            intent.putExtra("reminderId", medication.getReminder().getReminderId());
-            startActivityForResult(intent, 1001);
+    private void toggleReminderEdit() {
+        String currentMedicationId = medication.getMedicationId();
+        String currentTreatmentId = medication.getTreatmentId();
 
+        if (currentMedicationId == null || currentTreatmentId == null) {
+            Log.e(TAG, "Medication or Treatment ID is null. Cannot open ReminderActivity.");
+            Toast.makeText(this, "Error: Datos del medicamento incompletos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseFirestore.getInstance()
+                .collection("reminders")
+                .whereEqualTo("medicationId", currentMedicationId)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    Intent intent = new Intent(this, ReminderActivity.class);
+                    intent.putExtra("medicationId", currentMedicationId);
+                    intent.putExtra("treatmentId", currentTreatmentId);
+
+                    if (!querySnapshot.isEmpty()) {
+                        String reminderId = querySnapshot.getDocuments().get(0).getId();
+                        intent.putExtra("reminderId", reminderId);
+                        Log.d(TAG, "Existing reminder found for medication: " + currentMedicationId + ", ID: " + reminderId);
+                    } else {
+                        Log.d(TAG, "No existing reminder found for medication: " + currentMedicationId + ". Will create new.");
+                    }
+
+                    startActivityForResult(intent, 1001);
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching reminder for medication: " + currentMedicationId, e);
+                    Toast.makeText(this, "Error al cargar recordatorio: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1001 && resultCode == RESULT_OK) {
-            // Volvemos de ReminderActivity, recargamos datos
-            loadMedicationData(); // Esto volverá a traer `medication` y su `reminder`
+            loadMedicationData();
         }
-    }
-    private void saveReminderChanges() {
-        // Aquí puedes implementar la lógica para guardar cambios en el recordatorio si es necesario.
-        // Actualmente solo actualiza la UI y desactiva la edición.
-
-        if (reminderOriginal == null) {
-            Toast.makeText(this, "No hay recordatorio para guardar", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        medication.setReminder(reminderOriginal);
-
-        FirebaseFirestore.getInstance()
-                .collection("medications")
-                .document(medication.getMedicationId())
-                .set(medication)
-                .addOnSuccessListener(unused -> {
-                    FirebaseFirestore.getInstance()
-                            .collection("reminders")
-                            .whereEqualTo("medicationId", medication.getMedicationId())
-                            .get()
-                            .addOnSuccessListener(query -> {
-                                for (DocumentSnapshot doc : query.getDocuments()) {
-                                    doc.getReference().set(reminderOriginal);
-                                }
-                                Toast.makeText(this, "Recordatorio actualizado", Toast.LENGTH_SHORT).show();
-                                toggleReminderEdit(false);
-                                displayReminderInfo(reminderOriginal);
-                            });
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error al actualizar recordatorio", Toast.LENGTH_SHORT).show()
-                );
     }
 }

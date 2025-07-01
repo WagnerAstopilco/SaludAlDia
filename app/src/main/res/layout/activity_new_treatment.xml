@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <!-- Toolbar -->
     <include layout="@layout/adult_toolbar" />
 
-    <!-- Contenedor del contenido principal con padding -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,8 +19,6 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="8dp" />
-
-        <!-- Nombre del tratamiento -->
         <TextView
             android:id="@+id/textViewTreatmentNameLabel"
             android:layout_width="wrap_content"
@@ -38,8 +32,6 @@
             android:hint="@string/new_treatment_ativity_name_hint"
             android:inputType="textPersonName"
             android:layout_marginTop="8dp" />
-
-        <!-- Fecha de inicio -->
         <TextView
             android:id="@+id/textViewStartDateLabel"
             android:layout_width="wrap_content"
@@ -53,7 +45,6 @@
             android:layout_height="wrap_content"
             android:text="@string/new_treatment_ativity_button_select_start_date" />
 
-        <!-- Fecha de fin -->
         <TextView
             android:id="@+id/textViewEndDateLabel"
             android:layout_width="wrap_content"
@@ -67,7 +58,6 @@
             android:layout_height="wrap_content"
             android:text="@string/new_treatment_ativity_button_select_end_date" />
 
-        <!-- Descripción -->
         <TextView
             android:id="@+id/textViewTreatmentDescriptionLabel"
             android:layout_width="wrap_content"
@@ -83,7 +73,6 @@
             android:minLines="1"
             android:layout_marginTop="8dp" />
 
-        <!-- Estado (activo/inactivo) -->
         <TextView
             android:id="@+id/textViewTreatmentStateLabel"
             android:layout_width="wrap_content"
@@ -97,7 +86,6 @@
             android:layout_marginTop="8dp"
             android:entries="@array/treatment_states" />
 
-        <!-- Botón Guardar -->
         <Button
             android:id="@+id/buttonSaveTreatment"
             android:layout_width="match_parent"

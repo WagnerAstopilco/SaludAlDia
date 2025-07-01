@@ -1,11 +1,11 @@
 package com.example.saludaldia.data.model;
 
-import java.util.List;
 import java.util.Date;
+
 public class Treatment {
     private String treatmentId;
-    private String userId; // Usuario al que pertenece
-    private String name;   // Nombre del tratamiento
+    private String userId;
+    private String name;
     private Date startDate;
     private Date endDate;
     private String description;

@@ -69,108 +69,115 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingBottom="12dp">
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/notifications"
-                        android:tint="@android:color/black"/>
+                        android:tint="@android:color/black"
+                       />
 
                     <Switch
                         android:id="@+id/switchNotificationSound"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/notification_sound"
+                        android:layout_marginStart="12dp"
+                        />
+                </LinearLayout>
+
+                <!-- Alto Contraste -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/contrast"
+                        android:tint="@android:color/black"/>
+
+                    <Switch
+                        android:id="@+id/switchHighContrast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alto contraste"
                         android:layout_marginStart="12dp"/>
                 </LinearLayout>
 
-<!--                &lt;!&ndash; Alto Contraste &ndash;&gt;-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:paddingBottom="12dp">-->
+<!--                 Lectura de texto -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/contrast"-->
-<!--                        android:tint="@android:color/black"/>-->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/text_to_speech"
+                        android:tint="@android:color/black"/>
 
-<!--                    <Switch-->
-<!--                        android:id="@+id/switchHighContrast"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Alto contraste"-->
-<!--                        android:layout_marginStart="12dp"/>-->
-<!--                </LinearLayout>-->
+                    <Switch
+                        android:id="@+id/switchTextToSpeech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lectura de texto"
+                        android:layout_marginStart="12dp"/>
+                </LinearLayout>
 
-                <!-- Lectura de texto -->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:paddingBottom="12dp">-->
+                <!-- Botones grandes -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/text_to_speech"-->
-<!--                        android:tint="@android:color/black"/>-->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/large_buttons"
+                        android:tint="@android:color/black"/>
 
-<!--                    <Switch-->
-<!--                        android:id="@+id/switchTextToSpeech"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Lectura de texto"-->
-<!--                        android:layout_marginStart="12dp"/>-->
-<!--                </LinearLayout>-->
+                    <Switch
+                        android:id="@+id/switchLargeButtons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Botones grandes"
+                        android:layout_marginStart="12dp"/>
+                </LinearLayout>
 
-<!--                &lt;!&ndash; Botones grandes &ndash;&gt;-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:paddingBottom="12dp">-->
+<!--                 Reducir animaciones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/large_buttons"-->
-<!--                        android:tint="@android:color/black"/>-->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/animation"
+                        android:tint="@android:color/black"/>
 
-<!--                    <Switch-->
-<!--                        android:id="@+id/switchLargeButtons"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Botones grandes"-->
-<!--                        android:layout_marginStart="12dp"/>-->
-<!--                </LinearLayout>-->
-
-                <!-- Reducir animaciones -->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical">-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/animation"-->
-<!--                        android:tint="@android:color/black"/>-->
-
-<!--                    <Switch-->
-<!--                        android:id="@+id/switchReduceAnimations"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Reducir animaciones"-->
-<!--                        android:layout_marginStart="12dp"/>-->
-<!--                </LinearLayout>-->
+                    <Switch
+                        android:id="@+id/switchReduceAnimations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reducir animaciones"
+                        android:layout_marginStart="12dp"/>
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

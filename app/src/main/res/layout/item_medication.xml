@@ -2,17 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="12dp"
     android:layout_marginBottom="8dp">
-
-    <TextView
-        android:id="@+id/txtMedicationName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/medication_item_activity_name"
-        android:textStyle="bold"
-        android:textSize="16sp" />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtMedicationName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/medication_item_activity_name"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtMedicationState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/treatment_item_activity_active"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,21 +35,33 @@
         android:orientation="horizontal"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/txtMedicationDose"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/medication_item_activity_dose"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtMedicationNumberOfDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/treatment_item_activity_time"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtMedicationDose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/medication_item_activity_dose"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/btnViewDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/medical_info"
-            android:tint="@color/medication_details_tint"
+            app:tint="@color/medication_details_tint"
             android:contentDescription="Ver detalles"
             android:background="?android:selectableItemBackgroundBorderless"
             android:layout_marginStart="8dp" />
@@ -44,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/reminder"
-            android:tint="@color/medication_reminder_tint"
+            app:tint="@color/medication_reminder_tint"
             android:contentDescription="Recordatorio"
             android:background="?android:selectableItemBackgroundBorderless"
             android:layout_marginStart="8dp" />
@@ -54,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/delete"
-            android:tint="@color/medication_delete_tint"
+            app:tint="@color/medication_delete_tint"
             android:contentDescription="Eliminar"
             android:background="?android:selectableItemBackgroundBorderless"
             android:layout_marginStart="8dp" />

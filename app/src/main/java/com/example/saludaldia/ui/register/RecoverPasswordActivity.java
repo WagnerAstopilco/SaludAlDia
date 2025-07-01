@@ -1,24 +1,12 @@
 package com.example.saludaldia.ui.register;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.saludaldia.R;
-import com.example.saludaldia.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
-
-import com.example.saludaldia.R;
 
 public class RecoverPasswordActivity extends AppCompatActivity {
 
@@ -56,7 +44,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         });
 
         btnBackToLogin.setOnClickListener(v -> {
-            finish(); // o puedes usar startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
     }
 }

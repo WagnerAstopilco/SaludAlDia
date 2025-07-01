@@ -4,8 +4,11 @@ public class Medication {
     private String medicationId;
     private String treatmentId;
     private String name;
-    private String dose;  // ej. "500mg"
+    private String presentation;
+    private String via;
+    private String dose;
     private String notes;
+    private int number_days;
     private boolean active;
     private Reminder reminder;
 
@@ -13,12 +16,15 @@ public class Medication {
 
     }
 
-    public Medication(String medicationId, String treatmentId, String name, String dose, String notes, boolean active, Reminder reminder) {
+    public Medication(String medicationId, String treatmentId, String name,String presentation,String via, String dose, String notes,int number_days, boolean active, Reminder reminder) {
         this.medicationId = medicationId;
         this.treatmentId = treatmentId;
         this.name = name;
+        this.presentation=presentation;
+        this.via=via;
         this.dose = dose;
         this.notes = notes;
+        this.number_days=number_days;
         this.active = active;
         this.reminder = reminder;
     }
@@ -47,6 +53,22 @@ public class Medication {
         this.name = name;
     }
 
+    public String getPresentation() {
+        return presentation;
+    }
+
+    public void setPresentation(String presentation) {
+        this.presentation = presentation;
+    }
+
+    public String getVia() {
+        return via;
+    }
+
+    public void setVia(String via) {
+        this.via = via;
+    }
+
     public String getDose() {
         return dose;
     }
@@ -63,11 +85,19 @@ public class Medication {
         this.notes = notes;
     }
 
-    public boolean isActive() {
+    public int getNumber_days() {
+        return number_days;
+    }
+
+    public void setNumber_days(int number_days) {
+        this.number_days = number_days;
+    }
+
+    public boolean getIsActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         this.active = active;
     }
 

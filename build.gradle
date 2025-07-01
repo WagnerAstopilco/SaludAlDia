@@ -4,12 +4,14 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.2.0'
         classpath 'com.google.gms:google-services:4.4.1'
     }
 }
+
 plugins {
 alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false

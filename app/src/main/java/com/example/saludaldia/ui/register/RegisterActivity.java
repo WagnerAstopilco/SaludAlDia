@@ -3,10 +3,8 @@ package com.example.saludaldia.ui.register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.data.model.History;
 import com.example.saludaldia.data.model.UserSettings;
@@ -17,7 +15,6 @@ import com.example.saludaldia.ui.caregiver.CaregiverMainActivity;
 import com.example.saludaldia.ui.login.SelectRoleActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    // Elimina la instancia global de settingsRepository para evitar uso temprano
-    // private UserSettingsRepository settingsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +75,10 @@ public class RegisterActivity extends AppCompatActivity {
                     userData.put("email", email);
                     userData.put("role", role);
 
-                    // Crear el repositorio aquí, cuando el usuario ya está autenticado
                     UserSettingsRepository settingsRepository = new UserSettingsRepository();
 
                     db.collection("users").document(uid).set(userData)
                             .addOnSuccessListener(unused -> {
-                                // Crear historial vacío
                                 HistoryRepository.createHistoryForUser(uid, new HistoryRepository.OnHistoryCreatedListener() {
                                     @Override
                                     public void onSuccess(History history) {

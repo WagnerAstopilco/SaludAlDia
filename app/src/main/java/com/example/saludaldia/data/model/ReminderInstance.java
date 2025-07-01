@@ -3,11 +3,11 @@ package com.example.saludaldia.data.model;
 import java.util.Date;
 public class ReminderInstance {
     private String instanceId;
-    private String medicationId;     // Para trazabilidad directa
-    private String treatmentId;      // Útil para reportes
-    private String userId;           // Útil para notificaciones y filtros
-    private Date scheduledTime;      // Fecha y hora exacta de esta instancia
-    private String status;           // "pending", "confirmed", "missed"
+    private String medicationId;
+    private String treatmentId;
+    private String userId;
+    private Date scheduledTime;
+    private String status;
     private boolean notificationSent;
 
     public ReminderInstance() {

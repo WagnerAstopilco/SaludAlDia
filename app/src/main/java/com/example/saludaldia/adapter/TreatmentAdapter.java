@@ -10,17 +10,14 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.ui.treatment.TreatmentDetailsActivity;
 import com.example.saludaldia.data.model.Medication;
 import com.example.saludaldia.data.model.Treatment;
 import com.example.saludaldia.data.repository.TreatmentRepository;
-
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,13 +63,11 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
                                 notifyItemChanged(pos);
                             }
                         }
-                        Log.d("Adapter", "Estado actualizado a: " + newState);
                     },
                     () -> {
                         holder.switchTreatmentState.setOnCheckedChangeListener(null);
                         holder.switchTreatmentState.setChecked(!isChecked);
                         holder.switchTreatmentState.setOnCheckedChangeListener(createSwitchListener(treatment, holder));
-                        Log.e("Adapter", "Error al actualizar estado");
                     }
             );
         };
@@ -97,12 +92,8 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
         holder.tvTreatmentDates.setText(formattedDates);
         holder.tvTreatmentDescription.setText(treatment.getDescription());
 
-
-        // Obtener medicamentos desde el mapa
         List<Medication> medications = medicationsMap.get(treatment.getTreatmentId());
         if (medications != null && !medications.isEmpty()) {
-
-            // Ordenar alfabéticamente por nombre
             Collections.sort(medications, new Comparator<Medication>() {
                 @Override
                 public int compare(Medication m1, Medication m2) {
@@ -119,15 +110,12 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Trea
             holder.tvMedicationsList.setText("Sin medicamentos");
         }
 
-
-        // Switch
         holder.switchTreatmentState.setOnCheckedChangeListener(null);
         boolean isActive = treatment.getState().equalsIgnoreCase("activo");
         holder.switchTreatmentState.setChecked(isActive);
         holder.switchTreatmentState.setText(isActive ? "Activo" : "Inactivo");
         holder.switchTreatmentState.setOnCheckedChangeListener(createSwitchListener(treatment, holder));
 
-        // Ir a detalles
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
             Intent intent = new Intent(context, TreatmentDetailsActivity.class);

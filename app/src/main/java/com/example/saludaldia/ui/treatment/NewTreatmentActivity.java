@@ -1,27 +1,29 @@
 package com.example.saludaldia.ui.treatment;
 
 
+import static android.content.ContentValues.TAG;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.saludaldia.R;
+import com.example.saludaldia.data.model.HistoryEvent;
 import com.example.saludaldia.data.model.Treatment;
+import com.example.saludaldia.data.repository.HistoryRepository;
 import com.example.saludaldia.data.repository.TreatmentRepository;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class NewTreatmentActivity extends AppCompatActivity {
 
@@ -100,8 +102,9 @@ public class NewTreatmentActivity extends AppCompatActivity {
             return;
         }
 
+        String treatmentId = UUID.randomUUID().toString();
         Treatment treatment = new Treatment();
-        treatment.setTreatmentId(null); // Se genera automáticamente en Firestore
+        treatment.setTreatmentId(treatmentId);
         treatment.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         treatment.setName(name);
         treatment.setStartDate(startDate);
@@ -112,9 +115,30 @@ public class NewTreatmentActivity extends AppCompatActivity {
         TreatmentRepository repository = new TreatmentRepository();
         repository.addTreatment(treatment,
                 () -> {
-                    Toast.makeText(this, "Tratamiento guardado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.new_treatment_ativity_treatment_save), Toast.LENGTH_SHORT).show();
 
-                    // ← ¡Aquí el cambio clave!
+                    String eventId = UUID.randomUUID().toString(); // Generar un ID único para el HistoryEvent
+                    String eventDetails = "Se ha añadido un nuevo tratamiento: " + name + " (ID: " + treatmentId + ")";
+                    String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    HistoryEvent treatmentAddedEvent = new HistoryEvent();
+                    treatmentAddedEvent.setEventId(eventId);
+                    treatmentAddedEvent.setEventType("Agregado");
+                    treatmentAddedEvent.setDetails(eventDetails);
+                    HistoryRepository.addHistoryEventAndLinkToHistory(userId, treatmentAddedEvent)
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d(TAG, "HistoryEvent for treatment added successfully: " + eventId);
+                                Toast.makeText(this, "Tratamiento y evento de historial guardados.", Toast.LENGTH_SHORT).show();
+                                Intent resultIntent = new Intent();
+                                setResult(RESULT_OK);
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Failed to add history event for treatment: " + e.getMessage(), e);
+                                Toast.makeText(this, "Error al guardar evento de historial.", Toast.LENGTH_LONG).show();
+                                Intent resultIntent = new Intent();
+                                setResult(RESULT_OK);
+                                finish();
+                            });
                     Intent resultIntent = new Intent();
                     setResult(RESULT_OK);
                     finish();

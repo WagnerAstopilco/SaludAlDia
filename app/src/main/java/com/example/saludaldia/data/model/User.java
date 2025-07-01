@@ -1,5 +1,6 @@
 package com.example.saludaldia.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
 public class User {
     private String userId;
@@ -7,9 +8,9 @@ public class User {
     private String lastNames;
     private String email;
     private String phoneNumber;
-    private String role; // "user" o "caregiver"
-    private int age;
-    private float weight;
+    private String role;
+    private Integer age;
+    private Double weight;
     private List<String> allergies;
     private List<String> treatmentIds;
     private UserSettings settings;
@@ -18,9 +19,10 @@ public class User {
     private List<ReminderInstance> notifications;
 
     public User() {
+        this.linkedUserIds=new ArrayList<>();
     }
 
-    public User(String userId, String names,String lastNames, String email, String phoneNumber, String role, int age, float weight, List<String> allergies, List<String> treatmentIds, UserSettings settings, List<String> linkedUserIds, History history, List<ReminderInstance> notifications) {
+    public User(String userId, String names,String lastNames, String email, String phoneNumber, String role, Integer age, Double weight, List<String> allergies, List<String> treatmentIds, UserSettings settings, List<String> linkedUserIds, History history, List<ReminderInstance> notifications) {
         this.userId = userId;
         this.names = names;
         this.lastNames=lastNames;
@@ -85,19 +87,19 @@ public class User {
         this.role = role;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public float getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 

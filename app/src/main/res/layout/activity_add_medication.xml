@@ -22,7 +22,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -46,6 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
+            android:text="@string/new_medication_activity_presentation"/>
+        <EditText
+            android:id="@+id/etMedicationPresentation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_medication_activity_presentation_hint" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
             android:text="@string/new_medication_activity_dose"/>
         <EditText
             android:id="@+id/etMedicationDose"
@@ -57,25 +68,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold|italic"
-            android:text="Anotaciones"/>
+            android:text="@string/new_medication_activity_via"/>
+        <EditText
+            android:id="@+id/etMedicationVia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_medication_activity_via_hint" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:text="@string/new_medication_activity_annotations"/>
         <EditText
             android:id="@+id/etMedicationNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="En ayunas" />
+            android:hint="@string/new_medication_activity_annotations_hint" />
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textStyle="bold|italic"-->
-<!--            android:text="Estado"-->
-<!--            android:layout_marginBottom="8dp"/>-->
-<!--        <Switch-->
-<!--            android:id="@+id/switchActive"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Activo"-->
-<!--            android:layout_marginBottom="48dp"/>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:text="@string/new_medication_activity_number_of_days"/>
+        <EditText
+            android:id="@+id/etMedicationNumber_of_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/new_medication_activity_number_of_days_hint" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
+            android:text="@string/new_medication_activity_state"
+            android:layout_marginBottom="8dp"/>
+        <Switch
+            android:id="@+id/switchActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginBottom="48dp"/>
 
         <Button
             android:id="@+id/btnSaveMedication"

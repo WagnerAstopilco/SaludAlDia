@@ -44,7 +44,6 @@
 
         </LinearLayout>
 
-        <!-- Fechas -->
         <TextView
             android:id="@+id/tvDurationLabel"
             android:layout_width="match_parent"
@@ -61,7 +60,6 @@
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
 
-        <!-- Descripción -->
         <TextView
             android:id="@+id/tvDescriptionLabel"
             android:layout_width="match_parent"
@@ -78,7 +76,6 @@
             android:textSize="14sp"
             android:layout_marginBottom="8dp" />
 
-        <!-- Lista de medicamentos -->
         <TextView
             android:id="@+id/tvMedicationListLabel"
             android:layout_width="match_parent"

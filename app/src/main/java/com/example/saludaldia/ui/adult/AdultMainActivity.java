@@ -10,77 +10,58 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.adapter.FragmentPageAdapter;
+import com.example.saludaldia.ui.OCR.OcrCaptureActivity;
 import com.example.saludaldia.ui.login.LoginActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.example.saludaldia.ui.treatment.NewTreatmentActivity;
 import com.example.saludaldia.utils.FontScaleContextWrapper;
+import com.example.saludaldia.utils.CalendarServiceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-// Importaciones para Google Calendar API
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.calendar.Calendar; // Clase Calendar de la API de Google
+import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.CalendarList;
 import com.google.api.services.calendar.model.CalendarListEntry;
-
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AdultMainActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount mGoogleSignInAccount;
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
 
     private static final String TAG = "AdultMainActivity";
-    private Calendar mCalendarService; // Objeto para interactuar con la API de Calendar
+    private static final String APP_CALENDAR_NAME = "SaludAlDia Recordatorios";
+    private static final int RC_SIGN_IN = 9001;
+    private static final int REQUEST_AUTHORIZATION = 9002;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
-    private String appCalendarId = null;
-    private static final String APP_CALENDAR_NAME = "SaludAlDia Recordatorios"; // Nombre específico para el calendario de tu app
 
-    // 1. Interfaz para comunicar a los Fragments cuando el servicio de Calendar esté listo
-    public interface ListCalendarEventsListener {
-        void onCalendarServiceReady(Calendar calendarService, String calendarId);
-        void onCalendarServiceError(String message);
-    }
-
-    private ListCalendarEventsListener listCalendarEventsListener;
-
-    // Método para que los Fragments puedan registrarse como listeners
-    public void setListCalendarEventsListener(ListCalendarEventsListener listener) {
-        this.listCalendarEventsListener = listener;
-    }
-
-    // Métodos para que los Fragments puedan obtener el servicio y el ID directamente si ya están listos
-    public Calendar getCalendarService() {
-        return mCalendarService;
-    }
-
-    public String getAppCalendarId() {
-        return appCalendarId;
-    }
-
+    private FragmentPageAdapter pagerAdapter;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -109,7 +90,7 @@ public class AdultMainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        FragmentPageAdapter pagerAdapter = new FragmentPageAdapter(this);
+        pagerAdapter = new FragmentPageAdapter(this);
         viewPager.setAdapter(pagerAdapter);
 
         new TabLayoutMediator(tabLayout, viewPager,
@@ -124,31 +105,85 @@ public class AdultMainActivity extends AppCompatActivity {
                     }
                 }).attach();
 
-        // **Asegúrate de que este `GoogleSignInOptions` tenga el scope de Calendar**
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
-                .requestScopes(new Scope(CalendarScopes.CALENDAR)) // <--- ¡Esta línea es CRUCIAL!
+                .requestScopes(new Scope(CalendarScopes.CALENDAR))
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
 
         FloatingActionButton fab = findViewById(R.id.fabAddTreatment);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(AdultMainActivity.this, NewTreatmentActivity.class);
             startActivity(intent);
         });
+        FloatingActionButton fabOCR = findViewById(R.id.fabOCR);
+        fabOCR.setOnClickListener(v -> {
+            Intent intent = new Intent(AdultMainActivity.this, OcrCaptureActivity.class);
+            startActivity(intent);
+        });
 
-        // **Lógica para inicializar el servicio de Google Calendar**
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        // Verifica si hay una cuenta de Google logueada Y si tiene el scope de Calendar
-        if (account != null && account.getGrantedScopes().contains(new Scope(CalendarScopes.CALENDAR))) {
-            initializeCalendarService(account);
-        } else {
-            Log.d(TAG, "No Google account or Calendar scope not granted. Calendar functionality might be limited.");
-            Toast.makeText(this, "Para usar el calendario, por favor inicia sesión con Google y acepta los permisos.", Toast.LENGTH_LONG).show();
+        signInSilently();
+    }
+
+    private void signInSilently() {
+        mGoogleSignInClient.silentSignIn()
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        mGoogleSignInAccount = task.getResult();
+                        Log.d(TAG, "Silent sign in successful. Initializing Calendar service.");
+                        initializeCalendarService(mGoogleSignInAccount);
+                    } else {
+                        Log.d(TAG, "Silent sign in failed, starting interactive sign in.");
+                        signIn();
+                    }
+                });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult llamado. Request Code: " + requestCode + ", Result Code: " + resultCode);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else if (requestCode == REQUEST_AUTHORIZATION) {
+            if (resultCode == RESULT_OK) {
+                if (mGoogleSignInAccount != null) {
+                    initializeCalendarService(mGoogleSignInAccount);
+                }
+            } else {
+                Log.e(TAG, "User denied authorization for Calendar API.");
+                Toast.makeText(this, "Autorización de calendario denegada.", Toast.LENGTH_LONG).show();
+                CalendarServiceManager.getInstance().setCalendarService(null, null);
+            }
         }
     }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            if (account != null) {
+                Log.d(TAG, "Google sign in successful, initializing Calendar service.");
+                mGoogleSignInAccount = account;
+                initializeCalendarService(account);
+            } else {
+                Log.e(TAG, "Google sign in failed: Account is null.");
+                Toast.makeText(this, "Inicio de sesión de Google fallido.", Toast.LENGTH_LONG).show();
+            }
+        } catch (ApiException e) {
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(this, "Error en el inicio de sesión de Google: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     @Override
     protected void onResume() {
@@ -200,6 +235,7 @@ public class AdultMainActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -229,103 +265,96 @@ public class AdultMainActivity extends AppCompatActivity {
             return false;
         }
     }
-
-    // 2. Método para inicializar el servicio de Google Calendar
-    private void initializeCalendarService(GoogleSignInAccount account) {
-        GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
-                this, Collections.singleton(CalendarScopes.CALENDAR));
-        credential.setSelectedAccount(account.getAccount());
-
-        mCalendarService = new Calendar.Builder(
-                AndroidHttp.newCompatibleTransport(),
-                GsonFactory.getDefaultInstance(),
-                credential)
-                .setApplicationName("SaludAlDia") // Asegúrate de que este nombre sea descriptivo
-                .build();
-
-        Log.d(TAG, "Google Calendar service initialized successfully in AdultMainActivity.");
-        mainHandler.post(() -> Toast.makeText(this, "Servicio de Calendar inicializado.", Toast.LENGTH_SHORT).show());
-
-        // Una vez que el servicio está listo, verificar/crear el calendario de la app
-        checkOrCreateAppCalendar();
+    public Fragment getFragmentFromViewPager(int position) {
+        if (pagerAdapter != null) {
+            return pagerAdapter.getFragment(position);
+        }
+        return null;
     }
 
-    // 3. Método para buscar o crear el calendario de la app
-    private void checkOrCreateAppCalendar() {
-        if (mCalendarService == null) {
-            Log.e(TAG, "Calendar service not initialized. Cannot check or create app calendar.");
-            if (listCalendarEventsListener != null) {
-                listCalendarEventsListener.onCalendarServiceError("Servicio de calendario no inicializado.");
-            }
+    private void initializeCalendarService(GoogleSignInAccount account) {
+        if (account == null) {
+            Log.e(TAG, "Cannot initialize Calendar service: GoogleSignInAccount is null.");
+            CalendarServiceManager.getInstance().setCalendarService(null, null);
             return;
         }
 
         executorService.execute(() -> {
             try {
-                String foundCalendarId = null;
-                // Listar calendarios del usuario
-                List<CalendarListEntry> calendarList = mCalendarService.calendarList().list().execute().getItems();
-                if (calendarList != null) {
-                    for (CalendarListEntry entry : calendarList) {
-                        if (APP_CALENDAR_NAME.equals(entry.getSummary())) {
-                            foundCalendarId = entry.getId();
-                            break;
-                        }
-                    }
-                }
+                GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(
+                        this, Collections.singleton(CalendarScopes.CALENDAR));
+                credential.setSelectedAccount(account.getAccount());
 
-                if (foundCalendarId != null) {
-                    appCalendarId = foundCalendarId;
-                    mainHandler.post(() -> {
-                        Toast.makeText(AdultMainActivity.this, "Calendario '" + APP_CALENDAR_NAME + "' encontrado.", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Found app calendar with ID: " + appCalendarId);
-                        // 4. Notificar al listener (CalendarFragment) que el servicio está listo
-                        if (listCalendarEventsListener != null) {
-                            listCalendarEventsListener.onCalendarServiceReady(mCalendarService, appCalendarId);
-                        }
-                    });
-                } else {
-                    // Si no se encuentra, crear uno nuevo
-                    com.google.api.services.calendar.model.Calendar newCalendar = new com.google.api.services.calendar.model.Calendar();
-                    newCalendar.setSummary(APP_CALENDAR_NAME);
-                    // Establecer la zona horaria del dispositivo para el nuevo calendario
-                    newCalendar.setTimeZone(java.util.TimeZone.getDefault().getID());
+                // ¡Línea corregida aquí!
+                Calendar service = new Calendar.Builder(
+                        AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential)
+                        .setApplicationName(getString(R.string.app_name))
+                        .build();
 
-                    com.google.api.services.calendar.model.Calendar createdCalendar = mCalendarService.calendars().insert(newCalendar).execute();
-                    appCalendarId = createdCalendar.getId();
+                String calendarId = checkOrCreateAppCalendar(service);
 
-                    mainHandler.post(() -> {
-                        Toast.makeText(AdultMainActivity.this, "Calendario '" + APP_CALENDAR_NAME + "' creado exitosamente.", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Created new app calendar with ID: " + appCalendarId);
-                        // 4. Notificar al listener (CalendarFragment) que el servicio está listo
-                        if (listCalendarEventsListener != null) {
-                            listCalendarEventsListener.onCalendarServiceReady(mCalendarService, appCalendarId);
-                        }
-                    });
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "Error accessing Calendar API to check/create calendar: " + e.getMessage());
-                final String errorMessage = "Error al gestionar el calendario de la app: " + e.getMessage();
                 mainHandler.post(() -> {
-                    Toast.makeText(AdultMainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                    if (listCalendarEventsListener != null) {
-                        listCalendarEventsListener.onCalendarServiceError(errorMessage);
+                    CalendarServiceManager.getInstance().setCalendarService(service, calendarId);
+                    if (calendarId != null) {
+                        Toast.makeText(this, "Servicio de Calendar inicializado y calendario encontrado/creado.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Servicio de Calendar inicializado, pero no se pudo obtener el ID del calendario.", Toast.LENGTH_LONG).show();
                     }
+                });
+
+            } catch (UserRecoverableAuthIOException e) {
+                Log.e(TAG, "UserRecoverableAuthIOException: " + e.getMessage());
+                mainHandler.post(() -> {
+                    startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                    CalendarServiceManager.getInstance().setCalendarService(null, null);
+                });
+            } catch (IOException e) {
+                Log.e(TAG, "Error initializing Calendar service: " + e.getMessage(), e);
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "Error al inicializar servicio de calendario: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    CalendarServiceManager.getInstance().setCalendarService(null, null);
+                });
+            } catch (Exception e) {
+                Log.e(TAG, "Unexpected error during Calendar service initialization: " + e.getMessage(), e);
+                mainHandler.post(() -> {
+                    Toast.makeText(this, "Error inesperado al inicializar servicio de calendario: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    CalendarServiceManager.getInstance().setCalendarService(null, null);
                 });
             }
         });
     }
 
+    private String checkOrCreateAppCalendar(Calendar service) throws IOException {
+        String calendarId = null;
+        CalendarList calendarList = service.calendarList().list().execute();
+        if (calendarList.getItems() != null) {
+            for (CalendarListEntry entry : calendarList.getItems()) {
+                if (APP_CALENDAR_NAME.equals(entry.getSummary())) {
+                    calendarId = entry.getId();
+                    Log.d(TAG, "Found existing app calendar: " + APP_CALENDAR_NAME + " ID: " + calendarId);
+                    break;
+                }
+            }
+        }
+
+        if (calendarId == null) {
+            com.google.api.services.calendar.model.Calendar newCalendar = new com.google.api.services.calendar.model.Calendar();
+            newCalendar.setSummary(APP_CALENDAR_NAME);
+            newCalendar.setTimeZone(java.util.TimeZone.getDefault().getID());
+            newCalendar.setDescription("Eventos de recordatorio para la aplicación " + getString(R.string.app_name) + ".");
+
+            com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(newCalendar).execute();
+            calendarId = createdCalendar.getId();
+            Log.d(TAG, "Created new app calendar: " + APP_CALENDAR_NAME + " ID: " + calendarId);
+        }
+        return calendarId;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Asegúrate de apagar el executorService cuando la Activity se destruye
         if (executorService != null) {
             executorService.shutdown();
-        }
-        // Limpia el listener si la Activity se destruye mientras el Fragment está activo
-        if (listCalendarEventsListener != null) {
-            listCalendarEventsListener = null;
         }
     }
 }

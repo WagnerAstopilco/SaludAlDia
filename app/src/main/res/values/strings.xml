@@ -13,7 +13,7 @@
     <string name="invalid_username">Usuario invalido</string>
     <string name="invalid_password">La contraseña debe tener más de 5 caracteres</string>
     <string name="login_failed">"Inicio de sesión fallido"</string>
-    <!-- Strings used for fragments for navigation -->
+    <!-- Strings utilizadas para fragmentos de navegación -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Siguiente</string>
@@ -32,7 +32,7 @@
 
     <string name="app_logo">Logo de la app</string>
     <string name="main_image">Imagen principal</string>
-<!--    TEXTOS SETTINGS ACTIVITY    -->
+    <!--    TEXTOS SETTINGS ACTIVITY    -->
     <string name="settingsActivity_title">Configuración</string>
     <string name="text_app_preferences">Preferencias de la aplicación</string>
     <string name="dark_mode">Modo oscuro</string>
@@ -41,8 +41,8 @@
     <string name="spanish_display">Español</string>
     <string name="english_display">Inglés</string>
     <string-array name="languages_array">
-    <item>@string/spanish_display</item>
-    <item>@string/english_display</item>
+        <item>@string/spanish_display</item>
+        <item>@string/english_display</item>
     </string-array>
     <string name="font_size">Tamaño de letra</string>
     <string name="small_display">Pequeño</string>
@@ -70,10 +70,13 @@
     <string name="adult_profile_age">Edad</string>
     <string name="adult_profile_weight">Peso</string>
     <string name="adult_profile_allergies">Alergias</string>
-    <string name="save_button_adult_profile">Guardar</string>
-    <string name="cancel_button_adult_profile">Cancelar</string>
-    <string name="treatments_button_adult_profile">Tratamientos</string>
-    <string name="history_button_adult_profile">Historial</string>
+    <string name="adult_profile_qr_code">Código QR de tu Perfil</string>
+    <string name="adult_profile_button_save">Guardar</string>
+    <string name="adult_profile_button_cancel">Cancelar</string>
+    <string name="adult_profile_button_treatments">Tratamientos</string>
+    <string name="adult_profile_button_history">Historial</string>
+    <string name="adult_profile_toast_profile_not_found">Perfil no encontrado</string>
+
 
     <!--   TEXTOS ADULT MAIN ACTIVITY  -->
     <string name="adult_main_activity_title"> Bienvenido</string>
@@ -136,6 +139,7 @@
     <string name="new_treatment_ativity_description_hint">Tratamiento para estabilizar la glucosa en sangre</string>
     <string name="new_treatment_ativity_button_state">Estado</string>
     <string name="new_treatment_ativity_button_save_treatment">Guardar tratamiento</string>
+    <string name="new_treatment_ativity_treatment_save">Tratamiento guardado</string>
 
     <!--   TEXTOS TREATMENTS ACTIVITY  -->
     <string name="treatments_activity_title">Tratamientos</string>
@@ -177,16 +181,25 @@
     <!--   TEXTOS HISTORY ACTIVITY  -->
     <string name="history_activity_title">Historial</string>
     <string name="history_activity_subtitle">Lista de eventos del usuario</string>
+    <string name="history_activity_null_events">No hay eventos en el historial</string>
+
 
     <!--   TEXTOS NEW MEDICATION ACTIVITY  -->
     <string name="new_medication_activity_title">Nuevo medicamento</string>
     <string name="new_medication_activity_subtitle">Datos del medicamento</string>
     <string name="new_medication_activity_name">Nombre</string>
     <string name="new_medication_activity_name_hint">Paracetamol</string>
+    <string name="new_medication_activity_presentation">Presentación</string>
+    <string name="new_medication_activity_presentation_hint">Jarabe</string>
     <string name="new_medication_activity_dose">Dosis</string>
     <string name="new_medication_activity_dose_hint">1 pastilla (500mg)</string>
+    <string name="new_medication_activity_via">Vía</string>
+    <string name="new_medication_activity_via_hint">Oral</string>
+    <string name="new_medication_activity_number_of_days">N° de días</string>
+    <string name="new_medication_activity_number_of_days_hint">2</string>
     <string name="new_medication_activity_annotations">Anotaciones</string>
     <string name="new_medication_activity_annotations_hint">En ayunas</string>
+    <string name="new_medication_activity_state">Estado</string>
     <string name="new_medication_activity_buton_save">Guardar</string>
     <string name="new_medication_activity_buton_cancel">Cancelar</string>
 
@@ -195,13 +208,20 @@
     <string name="medication_details_activity_subtitle">Datos del medicamento</string>
     <string name="medication_details_activity_name">Nombre</string>
     <string name="medication_details_activity_name_hint">Paracetamol</string>
+    <string name="medication_details_activity_presentation">Presentación</string>
+    <string name="medication_details_activity_presentation_hint">Jarabe</string>
     <string name="medication_details_activity_dose">Dosis</string>
     <string name="medication_details_activity_dose_hint">1 pastilla (500mg)</string>
+    <string name="medication_details_activity_via">Vía</string>
+    <string name="medication_details_activity_via_hint">Oral</string>
+    <string name="medication_details_activity_number_of_days">N° de días</string>
+    <string name="medication_details_activity_number_of_days_hint">2</string>
     <string name="medication_details_activity_annotations">Anotaciones</string>
     <string name="medication_details_activity_annotations_hint">En ayunas</string>
-    <string name="new_medication_activity_buton_edit_medication">Editar</string>
-    <string name="new_medication_activity_buton_edit_save">Guardar</string>
-    <string name="new_medication_activity_buton_edit_cancel">Cancelar</string>
+    <string name="medication_details_activity_state">Estado</string>
+    <string name="medication_details_activity_buton_edit_medication">Editar</string>
+    <string name="medication_details_activity_buton_edit_save">Guardar</string>
+    <string name="medication_details_activity_buton_edit_cancel">Cancelar</string>
     <string name="medication_details_activity_reminder_data">Datos del recordatorio</string>
     <string name="medication_details_activity_reminder_no_data">Sin recordatorio programado</string>
     <string name="medication_details_activity_reminder_start_date">Inicio: </string>
@@ -226,5 +246,60 @@
     <string name="treatment_item_activity_list_medications">Medicamentos del tratamiento</string>
     <string name="treatment_item_activity_list_example">Medicamento 1 - Dosis 1\nMedicamento 2 - Dosis 2</string>
     <string name="treatment_item_activity_button_delete_treatment">Eliminar tratamiento</string>
+
+    <!--    TEXTOS ITEM NOTIFICATION-->
+    <string name="item_notification_title">Título de la notificación</string>
+    <string name="item_notification_message">Mensaje detallado de la notificación</string>
+    <string name="item_notification_date">Fecha y Hora: 30/06/2025 10:30 AM</string>
+    <string name="item_notification_state">Estado: Pendiente</string>
+
+    <!--    TEXTOS ITEM LINKED USER-->
+    <string name="item_linked_user_names">Nombre del Usuario</string>
+    <string name="item_linked_user_email">ejemplo@correo.com</string>
+    <string name="item_linked_user_button_treatments">Tratamientos</string>
+    <string name="item_linked_user_button_notifications">Notificaciones</string>
+
+    <!--    TEXTOS ITEM HISTORY EVENT-->
+    <string name="item_history_event_type">Tipo de Evento</string>
+    <string name="item_history_event_details">Detalles</string>
+    <string name="item_history_event_date">Fecha y Hora</string>
+    <string name="item_history_event_symptom">Síntoma</string>
+    <string name="item_history_event_reminders">Recordatorios asociados</string>
+
+    <!--    TEXTOS EVENT-->
+    <string name="item_event_title">Tipo de Evento</string>
+    <string name="item_event_description">Descripción</string>
+    <string name="item_event_start_date">Hora de inicio</string>
+
+    <!--    TEXTOS CALENDAR FRAGMENT-->
+    <string name="calendar_fragment_select_date">Selecciona una fecha para ver los eventos.</string>
+
+    <!--    TEXTOS CAREGIVER PROFILE-->
+    <string name="caregiver_activity_qr_code">Código QR de tu Perfil</string>
+
+    <!--    TEXTOS OCR CAPTURE-->
+    <string name="ocr_capture_activity_button_capture">Capturar Foto</string>
+    <string name="ocr_capture_activity_button_upload">Subir Imagen</string>
+    <string name="ocr_capture_activity_message">Texto detectado aparecerá aquí</string>
+
+    <!--    TEXTOS NOTIFICATIONS ACTIVITY-->
+    <string name="notifications_activity_null_notifications">No hay notificaciones en el historial</string>
+
+    <!--    TEXTOS CAREGIVER MAIN ACTIVITY-->
+    <string name="caregiver_main_activity_subtitle">Lista de usuarios vinculados</string>
+    <string name="caregiver_main_activity_null_linked_users">Aún no tienes usuarios vinculados</string>
+    <string name="caregiver_main_activity_promt_scanner">Escanea el código QR del usuario</string>
+    <string name="caregiver_main_activity_permission_scan_denied">Permiso de cámara denegado. No se puede escanear QR</string>
+    <string name="caregiver_main_activity_login_required">Debe iniciar sesión para vincular usuarios</string>
+    <string name="caregiver_main_activity_user_linked">Este usuario ya está vinculado</string>
+    <string name="caregiver_main_activity_not_yourself">No puedes vincularte a ti mismo</string>
+
+
+    <!--    TEXTOS LOGOUT ALERT-->
+    <string name="logout_alert_title">Cerrar sesión</string>
+    <string name="logout_alert_message">¿Estás seguro de que deseas cerrar sesión?</string>
+    <string name="logout_alert_button_confirm">Si</string>
+    <string name="logout_alert_button_cancel">Cancelar</string>
+    <string name="logout_alert_logout">Sesión cerrada correctamente</string>
 
 </resources>

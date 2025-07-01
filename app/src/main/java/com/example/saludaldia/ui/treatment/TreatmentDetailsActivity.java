@@ -1,20 +1,17 @@
 package com.example.saludaldia.ui.treatment;
 
+import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.saludaldia.R;
 import com.example.saludaldia.data.model.Medication;
 import com.example.saludaldia.data.model.Treatment;
@@ -24,7 +21,6 @@ import com.example.saludaldia.ui.medication.AddMedicationActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,9 +103,6 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
             btnEdit.setVisibility(View.VISIBLE);
             btnSave.setVisibility(View.GONE);
             btnCancel.setVisibility(View.GONE);
-//            if (currentTreatment != null) {
-//                populateTreatmentData();
-//            }
         });
 
         btnSave.setOnClickListener(v -> {
@@ -167,7 +160,6 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
     private void populateTreatmentData() {
         editTextName.setText(currentTreatment.getName());
 
-        // Formatea fechas a dd/MM/yyyy
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
         if (currentTreatment.getStartDate() != null) {
@@ -180,8 +172,9 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
 
         editTextDescription.setText(currentTreatment.getDescription());
 
-        boolean isActive = "Activo".equals(currentTreatment.getState());
+        boolean isActive = "activo".equals(currentTreatment.getState());
         switchState.setChecked(isActive);
+        Log.d(TAG,"estado del treat: "+isActive);
         switchState.setText(isActive ? "Activo" : "Inactivo");
     }
 

@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Fecha de inicio -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +52,6 @@
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
-            <!-- Fecha de fin -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +69,6 @@
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
-            <!-- Repetitivo -->
             <CheckBox
                 android:id="@+id/chkRecurring"
                 android:layout_width="wrap_content"
@@ -79,7 +76,6 @@
                 android:text="@string/reminder_activity_repetitive"
                 android:layout_marginTop="16dp" />
 
-            <!-- Frecuencia -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,8 +87,6 @@
                 android:id="@+id/spnFrequency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            <!-- Reemplazo de layoutDaysOfWeek con ChipGroup -->
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroupDays"
@@ -156,8 +150,6 @@
 
             </com.google.android.material.chip.ChipGroup>
 
-
-            <!-- Horarios -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,7 +157,6 @@
                 android:textStyle="bold"
                 android:layout_marginTop="16dp" />
 
-            <!-- Muestra los horarios seleccionados -->
             <TextView
                 android:id="@+id/tvScheduleTimes"
                 android:layout_width="match_parent"
@@ -174,7 +165,6 @@
                 android:padding="10dp"
                 android:text="@string/reminder_activity_no_schedules" />
 
-            <!-- Botón para añadir hora -->
             <Button
                 android:id="@+id/btnAddHour"
                 android:layout_width="wrap_content"
@@ -182,7 +172,6 @@
                 android:text="@string/reminder_activity_add_time"
                 android:layout_marginTop="8dp" />
 
-            <!-- Botón guardar -->
             <Button
                 android:id="@+id/btnSaveReminder"
                 android:layout_width="match_parent"

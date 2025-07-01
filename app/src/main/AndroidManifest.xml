@@ -2,8 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".MyAplication"
@@ -16,6 +24,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.caregiver.LinkedUserNotificationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.caregiver.LinkedUserTreatmentsActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receivers.ReminderAlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.saludaldia.ACTION_SHOW_REMINDER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receivers.NotificationActionReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.saludaldia.ACTION_COMPLETE_MEDICATION" />
+                <action android:name="com.example.saludaldia.ACTION_SNOOZE_MEDICATION" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.OCR.OcrCaptureActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.ReminderActivity"
             android:exported="false" />

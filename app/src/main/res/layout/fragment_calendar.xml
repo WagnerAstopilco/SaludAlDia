@@ -6,20 +6,21 @@
     android:padding="16dp">
 
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/customCalendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:selectedItem_textColor="#2196F3"
         app:todayItem_textColor="#4CAF50"
-        app:todayItem_background="@drawable/circle_white_stroke_background"
         app:selectedItem_background="@drawable/circle_white_stroke_background"
-        app:buttonLeft_drawableTintColor="@android:color/black"
-        app:buttonRight_drawableTintColor="@android:color/black"
-        app:expandIconColor="@android:color/black">
-    </com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+        app:todayItem_background="@drawable/circle_white_stroke_background"
+        app:buttonLeft_drawable="@drawable/arrow_left"
+        app:buttonRight_drawable="@drawable/arrow_right"
+        app:buttonLeft_drawableTintColor="@android:color/white"
+        app:buttonRight_drawableTintColor="@android:color/white"
+        app:expandIconColor="@android:color/black"/>
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         android:layout_marginTop="16dp"
@@ -29,7 +30,7 @@
         android:id="@+id/eventsListTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Selecciona una fecha para ver los eventos."
+        android:text="@string/calendar_fragment_select_date"
         android:textSize="16sp"
         android:textColor="@android:color/black"
         android:padding="8dp"/>

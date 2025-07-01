@@ -1,18 +1,22 @@
 package com.example.saludaldia.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
 public class History {
-    private String historyId;        // ID único del registro histórico
-    private String userId;           // Usuario al que pertenece el historial
-    private List<HistoryEvent> events;
+    private String historyId;
+    private String userId;
+
+    private List<String> eventsIds;
 
     public History() {
+        this.eventsIds = new ArrayList<>();
     }
 
-    public History(String historyId, String userId, List<HistoryEvent> events) {
+    public History(String historyId, String userId, List<String> eventsIds) {
         this.historyId = historyId;
         this.userId = userId;
-        this.events = events;
+        this.eventsIds = eventsIds != null ? eventsIds : new ArrayList<>();
     }
 
     public String getHistoryId() {
@@ -31,11 +35,11 @@ public class History {
         this.userId = userId;
     }
 
-    public List<HistoryEvent> getEvents() {
-        return events;
+    public List<String> getEventsIds() {
+        return eventsIds;
     }
 
-    public void setEvents(List<HistoryEvent> events) {
-        this.events = events;
+    public void setEventsIds(List<String> eventsIds) {
+        this.eventsIds = eventsIds;
     }
 }

@@ -9,8 +9,6 @@
 
     <include layout="@layout/adult_toolbar" />
 
-
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -34,7 +32,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Nombre -->
             <TextView android:text="@string/treatments_details_activity_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -45,7 +42,6 @@
                 android:inputType="text"
                 android:enabled="false"/>
 
-            <!-- Fecha de inicio -->
             <TextView android:text="@string/treatments_details_activity_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -56,7 +52,6 @@
                 android:inputType="date"
                 android:enabled="false"/>
 
-            <!-- Fecha de fin -->
             <TextView android:text="@string/treatments_details_activity_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -67,7 +62,6 @@
                 android:inputType="date"
                 android:enabled="false"/>
 
-            <!-- Descripción -->
             <TextView android:text="@string/treatments_details_activity_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -79,7 +73,6 @@
                 android:minLines="3"
                 android:enabled="false"/>
 
-            <!-- Estado -->
             <TextView
                 android:text="@string/treatments_details_activity_state"
                 android:layout_width="match_parent"
@@ -89,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <!-- Botones -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -120,7 +112,6 @@
                     android:layout_marginStart="8dp"/>
             </LinearLayout>
 
-            <!-- Lista de medicamentos -->
             <TextView
                 android:text="@string/treatments_details_activity_list_medications"
                 android:layout_width="match_parent"
@@ -138,7 +129,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Botón flotante para agregar medicamento -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddMedication"
         android:layout_width="wrap_content"
