@@ -142,20 +142,6 @@ public class OcrCaptureActivity extends AppCompatActivity {
             tessBaseAPI.clear();
         }
     }
-
-    private String findLineValue(String text, String key) {
-        for (String line : text.split("\n")) {
-            if (line.toLowerCase().contains(key.toLowerCase())) {
-                int index = line.indexOf(":");
-                if (index != -1 && index + 1 < line.length()) {
-                    return line.substring(index + 1).trim();
-                }
-            }
-        }
-        return null;
-    }
-
-
     private void initTesseract() {
         try {
             File dir = getFilesDir();
