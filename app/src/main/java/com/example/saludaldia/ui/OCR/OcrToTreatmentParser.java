@@ -119,7 +119,7 @@ public class OcrToTreatmentParser {
         reminder.setEndDate(endDate);
         reminder.setIsRecurring(true);
         reminder.setFrequency("Diario");
-        reminder.setIsActive(true);
+        reminder.setActive(true);
         List<String> generatedTimes = generateScheduleTimes(intervalRaw);
         reminder.setScheduleTimes(generatedTimes);
 

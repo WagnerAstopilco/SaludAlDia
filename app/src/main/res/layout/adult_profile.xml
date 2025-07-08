@@ -142,6 +142,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/adult_profile_emergency_contact"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <EditText
+                android:id="@+id/edtContactEmergency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adult_profile_emergency_contact"
+                android:textSize="16sp"
+                android:paddingBottom="8dp"
+                android:enabled="false"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/adult_profile_allergies"
                 android:textSize="16sp"
                 android:textStyle="bold"

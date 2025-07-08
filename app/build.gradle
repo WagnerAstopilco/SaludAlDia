@@ -115,15 +115,4 @@ dependencies {
     implementation 'com.google.zxing:core:3.5.3'
 
 
-    testImplementation 'junit:junit:4.13.2' // O la última versión disponible
-    testImplementation 'org.mockito:mockito-core:4.8.0' // O la última versión disponible
-    // Si usas Kotlin, también puedes añadir Mockito-Kotlin para una mejor integración
-    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0' // O la última versión disponible
-
-    // Para pruebas instrumentadas (en dispositivo/emulador) - No son unitarias puras, pero es bueno conocerlas
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5' // O la última versión
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1' // O la última versión
-    // Si necesitas Runner para pruebas instrumentadas
-    androidTestImplementation 'androidx.test:runner:1.5.2' // O la última versión
-
 }

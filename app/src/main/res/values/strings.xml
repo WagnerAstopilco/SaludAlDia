@@ -14,8 +14,10 @@
     <string name="invalid_password">La contraseña debe tener más de 5 caracteres</string>
     <string name="login_failed">"Inicio de sesión fallido"</string>
     <!-- Strings utilizadas para fragmentos de navegación -->
+
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="no_history_events_message">No hay eventos en el historial para mostrar.</string>
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
     <string name="default_web_client_id">872461959754-voncofidg6tag0jd5p5e7vie278s9a0g.apps.googleusercontent.com</string>
@@ -69,6 +71,7 @@
     <string name="adult_profile_phone">Teléfono</string>
     <string name="adult_profile_age">Edad</string>
     <string name="adult_profile_weight">Peso</string>
+    <string name="adult_profile_emergency_contact">Contacto de emergencia</string>
     <string name="adult_profile_allergies">Alergias</string>
     <string name="adult_profile_qr_code">Código QR de tu Perfil</string>
     <string name="adult_profile_button_save">Guardar</string>
@@ -153,6 +156,7 @@
     <string name="treatments_details_activity_end_date">Fecha de fin</string>
     <string name="treatments_details_activity_description">Descripción</string>
     <string name="treatments_details_activity_state">Estado</string>
+    <string name="treatments_details_activity_button_new_symptom">Agregar Sintoma</string>
     <string name="treatments_details_activity_button_edit">Editar</string>
     <string name="treatments_details_activity_button_save">Guardar</string>
     <string name="treatments_details_activity_button_cancel">Cancelar</string>
@@ -182,6 +186,7 @@
     <string name="history_activity_title">Historial</string>
     <string name="history_activity_subtitle">Lista de eventos del usuario</string>
     <string name="history_activity_null_events">No hay eventos en el historial</string>
+    <string name="history_activity_generate_pdf_report">Generar reporte PDF</string>
 
 
     <!--   TEXTOS NEW MEDICATION ACTIVITY  -->
@@ -301,5 +306,24 @@
     <string name="logout_alert_button_confirm">Si</string>
     <string name="logout_alert_button_cancel">Cancelar</string>
     <string name="logout_alert_logout">Sesión cerrada correctamente</string>
+
+<!--    TEXTOS SYMPTOM ACTIVITY-->
+    <string name="symptom_activity_title">Nuevo Síntoma</string>
+    <string name="symptom_date_reported_label">Fecha del Reporte</string>
+    <string name="symptom_date_reported_hint">Selecciona la fecha</string>
+    <string name="symptom_description_label">Descripción del Síntoma</string>
+    <string name="symptom_description_hint">Ej: Dolor de cabeza, náuseas, mareos...</string>
+    <string name="symptom_severity_label">Severidad</string>
+    <string name="symptom_notes_label">Notas Adicionales (Opcional)</string>
+    <string name="symptom_notes_hint">Cualquier detalle relevante...</string>
+    <string name="symptom_save_button">Guardar Síntoma</string>
+    <string name="symptom_cancel_button">Cancelar</string>
+    <string-array name="severity_options">
+        <item>Seleccionar Severidad</item>
+        <item>Leve</item>
+        <item>Moderado</item>
+        <item>Grave</item>
+        <item>Muy Grave</item>
+    </string-array>
 
 </resources>

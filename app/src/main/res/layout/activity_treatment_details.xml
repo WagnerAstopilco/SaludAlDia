@@ -90,6 +90,11 @@
                 android:layout_marginTop="16dp">
 
                 <Button
+                    android:id="@+id/btnNewSymptom"
+                    android:text="@string/treatments_details_activity_button_new_symptom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
                     android:id="@+id/btnEdit"
                     android:text="@string/treatments_details_activity_button_edit"
                     android:layout_width="wrap_content"

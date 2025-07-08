@@ -88,11 +88,11 @@ public class Reminder {
         this.days = days;
     }
 
-    public boolean getIsActive() {
+    public boolean getActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 

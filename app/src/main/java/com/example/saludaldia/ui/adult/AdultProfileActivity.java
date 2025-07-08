@@ -31,9 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class AdultProfileActivity extends AppCompatActivity { // Recomiendo cambiar a AdultMainActivity
+public class AdultProfileActivity extends AppCompatActivity {
 
-    private EditText edtNames, edtLastNames, edtEmail, edtPhone, edtAge, edtWeight, edtAllergies;
+    private EditText edtNames, edtLastNames, edtEmail, edtPhone, edtAge, edtWeight, edtAllergies,edtContactEmergency;
     private Button btnTreatments, btnHistory, btnSave, btnCancel;
     private ImageButton btnEdit;
     private ImageView qrImageView;
@@ -63,6 +63,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
         edtPhone = findViewById(R.id.edtPhone);
         edtAge = findViewById(R.id.edtAge);
         edtWeight = findViewById(R.id.edtWeight);
+        edtContactEmergency=findViewById(R.id.edtContactEmergency);
         edtAllergies = findViewById(R.id.edtAllergies);
         btnTreatments = findViewById(R.id.btnTreatments);
         btnHistory = findViewById(R.id.btnHistory);
@@ -156,6 +157,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
                         String phone = documentSnapshot.getString("phoneNumber");
                         Long age = documentSnapshot.getLong("age");
                         Double weight = documentSnapshot.getDouble("weight");
+                        String emergencyContact=documentSnapshot.getString("emergencyContact");
                         List<String> allergies = (List<String>) documentSnapshot.get("allergies");
                         edtNames.setText(names != null ? names : "");
                         edtLastNames.setText(lastNames != null ? lastNames : "");
@@ -163,6 +165,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
                         edtPhone.setText(phone != null ? phone : "");
                         edtAge.setText(age != null ? String.valueOf(age) : "");
                         edtWeight.setText(weight != null ? String.valueOf(weight) : "");
+                        edtContactEmergency.setText(emergencyContact!=null ? emergencyContact : "");
                         edtAllergies.setText(allergies != null && !allergies.isEmpty() ? android.text.TextUtils.join(", ", allergies) : "");
                     } else {
                         Toast.makeText(this, "Perfil no encontrado", Toast.LENGTH_SHORT).show();
@@ -179,6 +182,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
         edtPhone.setEnabled(enable);
         edtAge.setEnabled(enable);
         edtWeight.setEnabled(enable);
+        edtContactEmergency.setEnabled(enable);
         edtAllergies.setEnabled(enable);
         btnSave.setVisibility(enable ? View.VISIBLE : View.GONE);
         btnCancel.setVisibility(enable ? View.VISIBLE : View.GONE);
@@ -194,6 +198,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
         String phone = edtPhone.getText().toString().trim();
         String ageStr = edtAge.getText().toString().trim();
         String weightStr = edtWeight.getText().toString().trim();
+        String emergencyContact=edtContactEmergency.getText().toString().trim();
         String allergiesStr = edtAllergies.getText().toString().trim();
 
         Integer age = null;
@@ -232,6 +237,7 @@ public class AdultProfileActivity extends AppCompatActivity { // Recomiendo camb
         updates.put("phoneNumber", phone);
         updates.put("age", age);
         updates.put("weight", weight);
+        updates.put("emergencyContact", emergencyContact);
         updates.put("allergies", allergies);
 
         db.collection("users").document(uid)

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.saludaldia.R;
 import com.example.saludaldia.adapter.LinkedUsersAdapter;
 import com.example.saludaldia.data.model.User;
+import com.example.saludaldia.ui.FAQs;
 import com.example.saludaldia.ui.login.LoginActivity;
 import com.example.saludaldia.ui.toolbar.CaregiverToolbar;
 import com.example.saludaldia.utils.FontScaleContextWrapper;
@@ -121,6 +122,10 @@ public class CaregiverMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem faqsItem=menu.add(Menu.NONE, R.id.faqs, Menu.NONE, "FAQ's");
+        faqsItem.setIcon(R.drawable.faqs);
+        faqsItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         MenuItem profileItem = menu.add(Menu.NONE, R.id.menu_profile, Menu.NONE, "Ver perfil");
         profileItem.setIcon(R.drawable.profile);
         profileItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -157,7 +162,10 @@ public class CaregiverMainActivity extends AppCompatActivity {
                     .show();
 
             return true;
-        } else {
+        } else if(itemId == R.id.faqs){
+            startActivity(new Intent(this, FAQs.class));
+            return true;
+        }else {
             return false;
         }
     }

@@ -16,6 +16,7 @@
 
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="no_history_events_message">There are no events in history to display.</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -68,6 +69,7 @@
     <string name="adult_profile_phone">Phone</string>
     <string name="adult_profile_age">Age</string>
     <string name="adult_profile_weight">Weight</string>
+    <string name="adult_profile_emergency_contact">Emergency contact</string>
     <string name="adult_profile_allergies">Allergies</string>
     <string name="adult_profile_qr_code">Profile QR Code</string>
     <string name="adult_profile_button_save">Save</string>
@@ -151,6 +153,7 @@
     <string name="treatments_details_activity_end_date">End date</string>
     <string name="treatments_details_activity_description">Description</string>
     <string name="treatments_details_activity_state">State</string>
+    <string name="treatments_details_activity_button_new_symptom">Add symptom</string>
     <string name="treatments_details_activity_button_edit">Edit</string>
     <string name="treatments_details_activity_button_save">Save</string>
     <string name="treatments_details_activity_button_cancel">Cancel</string>
@@ -180,6 +183,7 @@
     <string name="history_activity_title">History</string>
     <string name="history_activity_subtitle">List of user events</string>
     <string name="history_activity_null_events">No events in history</string>
+    <string name="history_activity_generate_pdf_report">Generate PDF report</string>
 
     <!--   TEXTS NEW MEDICATION ACTIVITY  -->
     <string name="new_medication_activity_title">New medicament</string>
@@ -298,4 +302,23 @@
     <string name="logout_alert_button_confirm">Yes</string>
     <string name="logout_alert_button_cancel">Cancel</string>
     <string name="logout_alert_logout">Successfully logged out</string>
+
+    <!--    TEXTOS SYMPTOM ACTIVITY-->
+    <string name="symptom_activity_title">New symptom</string>
+    <string name="symptom_date_reported_label">Report date</string>
+    <string name="symptom_date_reported_hint">Select date</string>
+    <string name="symptom_description_label">Symptom description</string>
+    <string name="symptom_description_hint">Eg: Headache, nausea, dizziness...</string>
+    <string name="symptom_severity_label">Severity</string>
+    <string name="symptom_notes_label">Additional Notes (Optional)</string>
+    <string name="symptom_notes_hint">Any relevant details...</string>
+    <string name="symptom_save_button">Save Symptom</string>
+    <string name="symptom_cancel_button">Cancel</string>
+    <string-array name="severity_options">
+        <item>Select severity</item>
+        <item>Minor</item>
+        <item>Moderate</item>
+        <item>Serious</item>
+        <item>Very Serious</item>
+    </string-array>
 </resources>

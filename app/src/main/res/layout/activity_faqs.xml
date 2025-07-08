@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.FAQs">
+
+<include layout="@layout/adult_toolbar"/>
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/faqsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preguntas Frecuentes"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqQuestion1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="P: ¿Cómo registro un tratamiento?"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqAnswer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R: Puedes registrar un tratamiento desde los dos botones de la pantalla principal, ya sea escaneando una receta o ingresando los datos manualmente"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqQuestion2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="P: ¿Cómo puedo modificar el recordatorio?"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqAnswer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R: Dirígete a la sección tratamiento o medicamento y desde cualquiera de las dos secciones pulsa el boton editar recordatorio."
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqQuestion3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="P: ¿La aplicación funciona sin conexión a internet?"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqAnswer3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R: Algunas funciones básicas como el registro de datos sí, pero para sincronizar y acceder a contenido online se requiere conexión."
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/black"/>
+    <TextView
+        android:id="@+id/faqQuestion4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="P: ¿Puedo eliminar mi cuenta?"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/faqAnswer4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="R: Absolutamente solo necesitas presiona el boton 'Contactar Soporte', en la sección preguntas frecuentes y solicitar mediante correo la eliminación de tu cuenta, el equipo de soporte lo hara por ti y te notificará vía mail."
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/black"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+    <Button
+        android:id="@+id/contactSupportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contactar Soporte"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"/>
+
+</LinearLayout>
+</ScrollView>
+    </LinearLayout>

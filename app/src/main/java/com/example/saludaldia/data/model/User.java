@@ -17,12 +17,13 @@ public class User {
     private List<String> linkedUserIds;
     private History history;
     private List<ReminderInstance> notifications;
+    private String emergencyContact;
 
     public User() {
         this.linkedUserIds=new ArrayList<>();
     }
 
-    public User(String userId, String names,String lastNames, String email, String phoneNumber, String role, Integer age, Double weight, List<String> allergies, List<String> treatmentIds, UserSettings settings, List<String> linkedUserIds, History history, List<ReminderInstance> notifications) {
+    public User(String userId, String names,String lastNames, String email, String phoneNumber, String role, Integer age, Double weight, List<String> allergies, List<String> treatmentIds, UserSettings settings, List<String> linkedUserIds, History history, List<ReminderInstance> notifications,String emergencyContact) {
         this.userId = userId;
         this.names = names;
         this.lastNames=lastNames;
@@ -37,6 +38,7 @@ public class User {
         this.linkedUserIds = linkedUserIds;
         this.history = history;
         this.notifications = notifications;
+        this.emergencyContact=emergencyContact;
     }
 
     public String getUserId() {
@@ -149,5 +151,13 @@ public class User {
 
     public void setNotifications(List<ReminderInstance> notifications) {
         this.notifications = notifications;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
     }
 }

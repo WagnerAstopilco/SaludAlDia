@@ -37,6 +37,8 @@ import com.example.saludaldia.ui.caregiver.CaregiverMainActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.saludaldia.data.model.UserSettings;
 import com.example.saludaldia.data.repository.UserSettingsRepository;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,13 +47,12 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private ViewGroup layoutLogin;
-    // private EditText edtEmail, edtPassword;
-    // private Button btnLogin;
     private SignInButton btnGoogleSignIn;
-    // private TextView txtRegister;
     private TextView txtRecoverPassword;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount pendingGoogleAccount;
+    private String pendingFirebaseUid;
     private final ActivityResultLauncher<Intent> googleSignInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -73,6 +74,42 @@ public class LoginActivity extends AppCompatActivity {
             }
     );
 
+    private final ActivityResultLauncher<Intent> consentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    boolean consentAccepted = result.getData().getBooleanExtra(ConsentActivity.RESULT_CONSENT_ACCEPTED, false);
+                    if (consentAccepted) {
+                        Log.d(TAG, "Consentimiento aceptado en ConsentActivity. Procediendo con el registro.");
+                        if (pendingFirebaseUid != null && pendingGoogleAccount != null) {
+                            registerNewUserInFirestore(pendingFirebaseUid, pendingGoogleAccount);
+                        } else {
+                            Log.e(TAG, "Datos de usuario pendientes no encontrados después del consentimiento.");
+                            Toast.makeText(this, "Error: No se pudo completar el registro. Intente de nuevo.", Toast.LENGTH_LONG).show();
+                            mAuth.signOut();
+                            mGoogleSignInClient.signOut();
+                            layoutLogin.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        Log.d(TAG, "Consentimiento rechazado en ConsentActivity. Cerrando sesión.");
+                        mAuth.signOut();
+                        mGoogleSignInClient.signOut();
+                        Toast.makeText(this, "Debe aceptar la política de privacidad para usar la aplicación.", Toast.LENGTH_LONG).show();
+                        layoutLogin.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Log.d(TAG, "ConsentActivity finalizada sin resultado OK.");
+                    mAuth.signOut();
+                    mGoogleSignInClient.signOut();
+                    Toast.makeText(this, "Operación cancelada. Debe aceptar la política de privacidad.", Toast.LENGTH_LONG).show();
+                    layoutLogin.setVisibility(View.VISIBLE);
+                }
+                pendingFirebaseUid = null;
+                pendingGoogleAccount = null;
+            }
+    );
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Context languageContext = LanguageManager.setLocale(newBase);
@@ -86,16 +123,20 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        try {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                    .setPersistenceEnabled(true)
+                    .build();
+            db.setFirestoreSettings(settings);
+            Log.d(TAG, "Firestore persistence enabled successfully.");
+        } catch (Exception e) {
+            Log.e(TAG, "Error enabling Firestore persistence: " + e.getMessage(), e);
+        }
         layoutLogin = findViewById(R.id.layoutLogin);
         layoutLogin.setVisibility(View.GONE);
 
         mAuth = FirebaseAuth.getInstance();
-
-        // edtEmail = findViewById(R.id.edtEmail);
-        // edtPassword = findViewById(R.id.edtPassword);
-        // btnLogin = findViewById(R.id.btnLogin);
-        // txtRegister = findViewById(R.id.txtRegister);
 
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         txtRecoverPassword = findViewById(R.id.txtRecoverPassword);
@@ -108,50 +149,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // btnLogin.setOnClickListener(v -> {
-        //     String email = edtEmail.getText().toString().trim();
-        //     String password = edtPassword.getText().toString().trim();
-        //
-        //     if (email.isEmpty() || password.isEmpty()) {
-        //         Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
-        //         return;
-        //     }
-        //
-        //     mAuth.signInWithEmailAndPassword(email, password)
-        //             .addOnCompleteListener(task -> {
-        //                 if (task.isSuccessful()) {
-        //                     Log.d(TAG, "Email sign in successful.");
-        //                     verificarRol(null);
-        //                 } else {
-        //                     Exception exception = task.getException();
-        //                     String errorMsg = "Error al iniciar sesión";
-        //                     if (exception != null) {
-        //                         String message = exception.getMessage();
-        //                         if (message != null) {
-        //                             if (message.contains("The password is invalid") || message.contains("There is no user record")) {
-        //                                 errorMsg = "Credenciales incorrectas.";
-        //                             } else if (message.contains("This operation is not allowed") || message.contains("sign-in provider is disabled")) {
-        //                                 errorMsg = "Este correo está registrado con Google. Usa el botón de Google para iniciar sesión.";
-        //                             } else if (message.contains("network error")) {
-        //                                 errorMsg = "Problema de red. Verifica tu conexión.";
-        //                             }
-        //                         }
-        //                     }
-        //                     Log.e(TAG, "Email sign in failed: " + errorMsg, exception);
-        //                     Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
-        //                 }
-        //             });
-        // });
-
         btnGoogleSignIn.setOnClickListener(v -> {
             Log.d(TAG, "Initiating Google Sign-In flow.");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             googleSignInLauncher.launch(signInIntent);
         });
-
-        // txtRegister.setOnClickListener(v -> {
-        //     startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-        // });
 
         txtRecoverPassword.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RecoverPasswordActivity.class));
@@ -173,14 +175,14 @@ public class LoginActivity extends AppCompatActivity {
                                     mAuth.getCurrentUser().getEmail() != null &&
                                     googleAccount.getEmail().equals(mAuth.getCurrentUser().getEmail())) {
                                 Log.d(TAG, "onStart: Google account matches Firebase user.");
-                                verificarRol(googleAccount); // Pasar la cuenta de Google
+                                verificarRol(googleAccount);
                             } else {
                                 Log.d(TAG, "onStart: Google account does NOT match Firebase user. Proceeding with Firebase credentials only (no Google account to pass).");
-                                verificarRol(null); // No hay cuenta de Google relevante para este Firebase user
+                                verificarRol(null);
                             }
                         } else {
                             Log.w(TAG, "onStart: Silent Google Sign-In failed or no active Google session.", task.getException());
-                            verificarRol(null); // No hay GoogleSignInAccount activo
+                            verificarRol(null);
                         }
                     });
         } else {
@@ -212,74 +214,21 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
                                 Log.d(TAG, "User already exists in Firestore.");
-                                // Usuario ya existe, verificar rol
                                 verificarRol(acct);
                             } else {
-                                Log.d(TAG, "New Google user. Registering in Firestore.");
-                                // Usuario nuevo, registrar datos básicos y crear historial/configuración
-                                String nombre = acct.getDisplayName() != null ? acct.getDisplayName() : "";
-                                String email = acct.getEmail() != null ? acct.getEmail() : "";
+                                Log.d(TAG, "New Google user. Checking for consent.");
+                                pendingFirebaseUid = uid;
+                                pendingGoogleAccount = acct;
 
-                                Map<String, Object> nuevoUsuario = new HashMap<>();
-                                nuevoUsuario.put("userId", uid);
-                                nuevoUsuario.put("names", nombre);
-                                nuevoUsuario.put("email", email);
-                                nuevoUsuario.put("role", null); // No se ha definido aún
-
-                                db.collection("users").document(uid)
-                                        .set(nuevoUsuario)
-                                        .addOnSuccessListener(aVoid -> {
-                                            Log.d(TAG, "User data saved to Firestore. Creating history.");
-                                            HistoryRepository.createHistoryForUser(uid, new HistoryRepository.OnHistoryCreatedListener() {
-                                                @Override
-                                                public void onSuccess(History history) {
-                                                    Log.d(TAG, "History created. Creating settings.");
-                                                    UserSettings settings = new UserSettings(
-                                                            uid,
-                                                            "es",
-                                                            "medium",
-                                                            false,
-                                                            false,
-                                                            false,
-                                                            false,
-                                                            false,
-                                                            false
-                                                    );
-                                                    UserSettingsRepository settingsRepo = new UserSettingsRepository();
-                                                    settingsRepo.saveUserSettings(
-                                                            settings,
-                                                            success -> {
-                                                                Log.d(TAG, "User settings saved. Redirecting to role selection.");
-                                                                verificarRol(acct);
-                                                            },
-                                                            error -> {
-                                                                Log.e(TAG, "Error saving user settings: " + error.getMessage(), error);
-                                                                Toast.makeText(LoginActivity.this, "Error al guardar configuración: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                                                                layoutLogin.setVisibility(View.VISIBLE);
-                                                            }
-                                                    );
-                                                }
-
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.e(TAG, "Error creating history: " + e.getMessage(), e);
-                                                    Toast.makeText(LoginActivity.this, "Error al crear historial: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                    layoutLogin.setVisibility(View.VISIBLE);
-                                                }
-                                            });
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Log.e(TAG, "Error registering new user in Firestore: " + e.getMessage(), e);
-                                            Toast.makeText(this, "Error al registrar usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            layoutLogin.setVisibility(View.VISIBLE);
-                                        });
-
+                                Intent intent = new Intent(LoginActivity.this, ConsentActivity.class);
+                                consentLauncher.launch(intent);
                             }
                         })
                         .addOnFailureListener(e -> {
                             Log.e(TAG, "Error accessing user data in Firestore: " + e.getMessage(), e);
                             Toast.makeText(this, "Error al acceder a datos del usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             layoutLogin.setVisibility(View.VISIBLE);
+                            mAuth.signOut();
                         });
 
             } else {
@@ -288,6 +237,68 @@ public class LoginActivity extends AppCompatActivity {
                 layoutLogin.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void registerNewUserInFirestore(@NonNull String uid, @NonNull GoogleSignInAccount acct) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        String nombre = acct.getDisplayName() != null ? acct.getDisplayName() : "";
+        String email = acct.getEmail() != null ? acct.getEmail() : "";
+
+        Map<String, Object> nuevoUsuario = new HashMap<>();
+        nuevoUsuario.put("userId", uid);
+        nuevoUsuario.put("names", nombre);
+        nuevoUsuario.put("email", email);
+        nuevoUsuario.put("role", null);
+
+        db.collection("users").document(uid)
+                .set(nuevoUsuario)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "User data saved to Firestore after consent. Creating history.");
+                    HistoryRepository.createHistoryForUser(uid, new HistoryRepository.OnHistoryCreatedListener() {
+                        @Override
+                        public void onSuccess(History history) {
+                            Log.d(TAG, "History created. Creating settings.");
+                            UserSettings settings = new UserSettings(
+                                    uid,
+                                    "es",
+                                    "medium",
+                                    false, false, false, false, false, false
+                            );
+                            UserSettingsRepository settingsRepo = new UserSettingsRepository();
+                            settingsRepo.saveUserSettings(
+                                    settings,
+                                    success -> {
+                                        Log.d(TAG, "User settings saved. Redirecting to role selection.");
+                                        verificarRol(acct);
+                                    },
+                                    error -> {
+                                        Log.e(TAG, "Error saving user settings: " + error.getMessage(), error);
+                                        Toast.makeText(LoginActivity.this, "Error al guardar configuración: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
+                                        mGoogleSignInClient.signOut();
+                                        layoutLogin.setVisibility(View.VISIBLE);
+                                    }
+                            );
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "Error creating history: " + e.getMessage(), e);
+                            Toast.makeText(LoginActivity.this, "Error al crear historial: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            mAuth.signOut();
+                            mGoogleSignInClient.signOut();
+                            layoutLogin.setVisibility(View.VISIBLE);
+                        }
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error registering new user in Firestore: " + e.getMessage(), e);
+                    Toast.makeText(this, "Error al registrar usuario: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    mAuth.signOut();
+                    mGoogleSignInClient.signOut();
+                    layoutLogin.setVisibility(View.VISIBLE);
+                });
     }
 
     private void verificarRol(@Nullable GoogleSignInAccount googleAccount) {
@@ -305,7 +316,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else if ("cuidador".equals(role)) {
                             intent = new Intent(this, CaregiverMainActivity.class);
                         } else {
-                            // Si el rol no está definido, o es inesperado, redirigir a seleccionar rol
                             intent = new Intent(this, SelectRoleActivity.class);
                         }
 
@@ -320,8 +330,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        // Documento de usuario no existe, redirigir a seleccionar rol
-                        Log.w(TAG, "User document does not exist in Firestore for UID: " + uid + ". Redirecting to SelectRoleActivity.");
+                        Log.w(TAG, "User document does not exist in Firestore for UID: " + uid + " after supposed registration. Redirecting to SelectRoleActivity.");
                         Intent intent = new Intent(this, SelectRoleActivity.class);
                         if (googleAccount != null) {
                             intent.putExtra("google_account_id", googleAccount.getId());

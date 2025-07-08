@@ -15,13 +15,13 @@ public class Notification {
     private long notificationTriggerTimeMillis;
     @ServerTimestamp
     private Date timestamp;
-    private boolean isDismissed;
-    private boolean isCompleted;
+    private boolean dismissed;
+    private boolean completed;
 
     public Notification() {
     }
 
-    public Notification(String id, String userId, String title, String message, String relatedReminderId, String relatedMedicationId, String relatedTreatmentId, long notificationTriggerTimeMillis, Date timestamp, boolean isDismissed, boolean isCompleted) {
+    public Notification(String id, String userId, String title, String message, String relatedReminderId, String relatedMedicationId, String relatedTreatmentId, long notificationTriggerTimeMillis, Date timestamp, boolean dismissed, boolean completed) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -31,8 +31,8 @@ public class Notification {
         this.relatedTreatmentId = relatedTreatmentId;
         this.notificationTriggerTimeMillis = notificationTriggerTimeMillis;
         this.timestamp = timestamp;
-        this.isDismissed = isDismissed;
-        this.isCompleted = isCompleted;
+        this.dismissed = dismissed;
+        this.completed = completed;
     }
 
 
@@ -108,19 +108,19 @@ public class Notification {
         this.timestamp = timestamp;
     }
 
-    public boolean isDismissed() {
-        return isDismissed;
+    public boolean getDismissed() {
+        return dismissed;
     }
 
     public void setDismissed(boolean dismissed) {
-        isDismissed = dismissed;
+        this.dismissed = dismissed;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public boolean getCompleted() {
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 }

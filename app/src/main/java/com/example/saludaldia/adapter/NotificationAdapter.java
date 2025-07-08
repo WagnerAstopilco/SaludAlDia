@@ -43,11 +43,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         } else {
             holder.tvTimestamp.setText("Hora programada: " + dateTimeFormat.format(new Date(notification.getNotificationTriggerTimeMillis())));
         }
-        if (notification.isCompleted()) {
+        if (notification.getCompleted()) {
             holder.tvStatus.setVisibility(View.VISIBLE);
             holder.tvStatus.setText("Estado: Completado");
             holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_green_dark));
-        } else if (notification.isDismissed()) {
+        } else if (notification.getDismissed()) {
             holder.tvStatus.setVisibility(View.VISIBLE);
             holder.tvStatus.setText("Estado: Descartado");
             holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class AddMedicationActivity extends AppCompatActivity {
 
-    private EditText etName, etDose, etNotes;
+    private EditText etName, etDose, etNotes,etMedicationNumber_of_days;
     private Switch switchActive;
     private Reminder reminder = null;
 
@@ -35,6 +35,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         etDose = findViewById(R.id.etMedicationDose);
         etNotes = findViewById(R.id.etMedicationNotes);
         switchActive = findViewById(R.id.switchActive);
+        etMedicationNumber_of_days=findViewById(R.id.etMedicationNumber_of_days);
         Button btnSave = findViewById(R.id.btnSaveMedication);
         Button btnCancel = findViewById(R.id.btnCancelMedication);
 
@@ -49,6 +50,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             String name = etName.getText().toString().trim();
             String dose = etDose.getText().toString().trim();
             String notes = etNotes.getText().toString().trim();
+            int numberOfDays=Integer.parseInt(etMedicationNumber_of_days.getText().toString().trim());
             boolean isActive = switchActive.isChecked();
 
             if (name.isEmpty() || dose.isEmpty()) {
@@ -62,6 +64,7 @@ public class AddMedicationActivity extends AppCompatActivity {
             medication.setName(name);
             medication.setDose(dose);
             medication.setNotes(notes);
+            medication.setNumber_days(numberOfDays);
             medication.setIsActive(isActive);
 //            medication.setReminder(reminder);
 

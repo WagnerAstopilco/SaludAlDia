@@ -7,12 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notification.NotificationsActivity">
+
     <include layout="@layout/adult_toolbar"/>
+
     <TextView
-        android:id="@+id/tvNotifications"
+        android:id="@+id/tv_stats_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/notifications_activity_list_notifications"
+        android:text="Estadísticas de Cumplimiento"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="16dp"
@@ -20,17 +22,56 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_adult"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_notifications_history"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_progress_bar_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvNotifications"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@drawable/rounded_corners_background" app:layout_constraintTop_toBottomOf="@id/tv_stats_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_notification" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_compliance_summary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Completadas: 0% | Ignoradas: 0%"
+        android:textSize="14sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/ll_progress_bar_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"/> <TextView
+    android:id="@+id/tvNotifications"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:text="@string/notifications_activity_list_notifications"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    app:layout_constraintTop_toBottomOf="@id/tv_compliance_summary" app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp" /> <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rv_notifications_history"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginTop="16dp"
+    app:layout_constraintTop_toBottomOf="@id/tvNotifications"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    tools:listitem="@layout/item_notification" />
 
     <TextView
         android:id="@+id/tv_no_notifications"
@@ -42,4 +83,5 @@
         app:layout_constraintBottom_toBottomOf="@id/rv_notifications_history"
         app:layout_constraintStart_toStartOf="@id/rv_notifications_history"
         app:layout_constraintEnd_toEndOf="@id/rv_notifications_history" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

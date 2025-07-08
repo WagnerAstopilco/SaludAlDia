@@ -1,8 +1,11 @@
 package com.example.saludaldia.ui.adult;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,12 +13,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.saludaldia.R;
 import com.example.saludaldia.adapter.FragmentPageAdapter;
+import com.example.saludaldia.ui.FAQs;
 import com.example.saludaldia.ui.OCR.OcrCaptureActivity;
 import com.example.saludaldia.ui.login.LoginActivity;
 import com.example.saludaldia.ui.toolbar.AdultToolbar;
@@ -42,6 +49,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.CalendarList;
 import com.google.api.services.calendar.model.CalendarListEntry;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
@@ -60,6 +68,7 @@ public class AdultMainActivity extends AppCompatActivity {
     private static final int REQUEST_AUTHORIZATION = 9002;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private static final int PERMISSION_REQUEST_CALL_PHONE = 101;
 
     private FragmentPageAdapter pagerAdapter;
 
@@ -122,7 +131,17 @@ public class AdultMainActivity extends AppCompatActivity {
             Intent intent = new Intent(AdultMainActivity.this, OcrCaptureActivity.class);
             startActivity(intent);
         });
-
+        FloatingActionButton fabEmergencyCall = findViewById(R.id.fabEmergencyButton);
+        fabEmergencyCall.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        PERMISSION_REQUEST_CALL_PHONE);
+            } else {
+                initiateEmergencyCall();
+            }
+        });
         signInSilently();
     }
 
@@ -138,6 +157,54 @@ public class AdultMainActivity extends AppCompatActivity {
                         signIn();
                     }
                 });
+    }
+    private void initiateEmergencyCall() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "Debe iniciar sesión para realizar una llamada de emergencia.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String emergencyContact = documentSnapshot.getString("emergencyContact");
+
+                        if (emergencyContact != null && !emergencyContact.trim().isEmpty()) {
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + emergencyContact));
+
+                            if (intent.resolveActivity(getPackageManager()) != null) {
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "No se encontró una aplicación para realizar llamadas.", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(this, "No se ha configurado un número de contacto de emergencia.", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "No se encontró su perfil de usuario en la base de datos.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error al obtener contacto de emergencia desde Firestore: " + e.getMessage());
+                    Toast.makeText(this, "Error al cargar el contacto de emergencia. Intente de nuevo.", Toast.LENGTH_LONG).show();
+                });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults); // ¡Importante llamar al super!
+
+        if (requestCode == PERMISSION_REQUEST_CALL_PHONE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initiateEmergencyCall();
+            } else {
+                Toast.makeText(this, "Permiso de llamada denegado. No se puede realizar la llamada de emergencia.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void signIn() {
@@ -224,6 +291,10 @@ public class AdultMainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem faqsItem=menu.add(Menu.NONE, R.id.faqs, Menu.NONE, "FAQ's");
+        faqsItem.setIcon(R.drawable.faqs);
+        faqsItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
         MenuItem profileItem = menu.add(Menu.NONE, R.id.menu_profile, Menu.NONE, "Ver perfil");
         profileItem.setIcon(R.drawable.profile);
         profileItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -261,7 +332,10 @@ public class AdultMainActivity extends AppCompatActivity {
                     .show();
 
             return true;
-        } else {
+        } else if(itemId == R.id.faqs){
+            startActivity(new Intent(this, FAQs.class));
+            return true;
+        }else {
             return false;
         }
     }

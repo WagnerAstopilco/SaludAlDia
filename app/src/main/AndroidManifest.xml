@@ -9,9 +9,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".MyAplication"
@@ -25,11 +29,30 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.treatment.SymptomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.ConsentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.FAQs"
+            android:exported="false" />
+        <activity
             android:name=".ui.caregiver.LinkedUserNotificationsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.caregiver.LinkedUserTreatmentsActivity"
             android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <receiver
             android:name=".receivers.ReminderAlarmReceiver"
@@ -100,9 +123,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.register.RegisterActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".ui.login.LoginActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">

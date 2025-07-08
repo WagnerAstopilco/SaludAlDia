@@ -31,7 +31,7 @@ import java.util.Locale;
 public class TreatmentDetailsActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextStartDate, editTextEndDate, editTextDescription;
-    private Button btnEdit, btnSave, btnCancel;
+    private Button btnNewSymptom,btnEdit, btnSave, btnCancel;
     private RecyclerView recyclerMedications;
     private FloatingActionButton fabAddMedication;
     private Switch switchState;
@@ -78,6 +78,7 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
         editTextEndDate = findViewById(R.id.editTextEndDate);
         editTextDescription = findViewById(R.id.editTextDescription);
         switchState = findViewById(R.id.switchState);
+        btnNewSymptom=findViewById(R.id.btnNewSymptom);
         btnEdit = findViewById(R.id.btnEdit);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
@@ -91,6 +92,11 @@ public class TreatmentDetailsActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
+        btnNewSymptom.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SymptomActivity.class);
+            intent.putExtra("treatmentId", currentTreatment.getTreatmentId());
+            startActivity(intent);
+        });
         btnEdit.setOnClickListener(v -> {
             setFieldsEditable(true);
             btnEdit.setVisibility(View.GONE);

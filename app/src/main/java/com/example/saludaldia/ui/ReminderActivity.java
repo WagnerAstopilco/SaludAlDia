@@ -32,6 +32,7 @@ import com.example.saludaldia.utils.CalendarServiceManager;
 import com.example.saludaldia.utils.NotificationHelper;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.api.client.util.DateTime;
@@ -59,6 +60,7 @@ public class ReminderActivity extends AppCompatActivity {
     private String reminderId;
     private Date treatmentStartDate;
     private Medication currentMedication;
+    private MaterialSwitch switchActiveReminder;
     private final List<String> selectedTimes = new ArrayList<>();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -125,6 +127,7 @@ public class ReminderActivity extends AppCompatActivity {
         btnSaveReminder = findViewById(R.id.btnSaveReminder);
         findViewById(R.id.btnCancel).setOnClickListener(v -> finish());
 
+        switchActiveReminder=findViewById(R.id.switchActiveReminder);
         chipGroupDaysOfWeek = findViewById(R.id.chipGroupDays);
         chipMonday = findViewById(R.id.chipMonday);
         chipTuesday = findViewById(R.id.chipTuesday);
@@ -320,7 +323,7 @@ public class ReminderActivity extends AppCompatActivity {
                     } else {
                         currentReminder = new Reminder();
                         currentReminder.setMedicationId(medicationId);
-                        currentReminder.setIsActive(true);
+                        currentReminder.setActive(true);
                     }
                 } else {
                     Log.e(TAG, "Fecha de inicio del tratamiento es nula para el ID: " + treatmentId);
@@ -384,6 +387,7 @@ public class ReminderActivity extends AppCompatActivity {
                         Collections.sort(selectedTimes);
                     }
                     updateScheduleTimesTextView();
+                    switchActiveReminder.setChecked(currentReminder.getActive());
 
                     spnFrequency.setEnabled(chkRecurring.isChecked());
                     updateDaysOfWeekVisibility(chkRecurring.isChecked(), currentReminder.getFrequency());
@@ -427,6 +431,8 @@ private void saveReminder() {
     String endDateStr = txtEndDate.getText().toString().trim();
     boolean isRecurring = chkRecurring.isChecked();
     String frequency = spnFrequency.getSelectedItem().toString();
+    boolean active = switchActiveReminder.isChecked();
+    Log.d(TAG,"estado del recordatorio"+active);
 
     if (treatmentStartDate == null) {
         Toast.makeText(this, "Error: La fecha de inicio del tratamiento no ha sido cargada.", Toast.LENGTH_LONG).show();
@@ -459,7 +465,7 @@ private void saveReminder() {
     currentReminder.setIsRecurring(isRecurring);
     currentReminder.setFrequency(frequency);
     currentReminder.setScheduleTimes(selectedTimes);
-    currentReminder.setIsActive(true);
+    currentReminder.setActive(active);
 
     if (isRecurring && frequency.equalsIgnoreCase("Días específicos")) {
         List<String> selectedDays = getSelectedDaysOfWeek();
@@ -473,12 +479,10 @@ private void saveReminder() {
     }
 
     if (reminderId != null && !reminderId.isEmpty()) {
-        // Eliminar eventos de calendario existentes antes de recrearlos
         deleteExistingCalendarEvents(currentReminder.getCalendarEventIds(), new CalendarServiceManager.OnCalendarEventsDeletedListener() {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "Eventos de calendario previos eliminados exitosamente (si existían).");
-                // Después de eliminar, actualiza y crea nuevos eventos y alarmas
                 updateReminderInFirestoreAndCreateNewEvents(currentReminder, currentMedication);
             }
 
@@ -486,8 +490,7 @@ private void saveReminder() {
             public void onFailure(Exception e) {
                 Log.e(TAG, "Error al eliminar eventos de calendario previos: " + e.getMessage(), e);
                 Toast.makeText(ReminderActivity.this, "Error al limpiar eventos antiguos del calendario. Intenta guardar de nuevo.", Toast.LENGTH_LONG).show();
-                // Aunque haya un error al eliminar, permitir que continúe para intentar recrear.
-                updateReminderInFirestoreAndCreateNewEvents(currentReminder, currentMedication);
+                    updateReminderInFirestoreAndCreateNewEvents(currentReminder, currentMedication);
             }
         });
     } else {
@@ -519,7 +522,10 @@ private void saveReminder() {
                 .set(reminder)
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "Recordatorio actualizado en Firestore: " + reminder.getReminderId());
-                    createCalendarEventsForReminder(reminder, medication);
+                    if(reminder.getActive()){
+                        createCalendarEventsForReminder(reminder, medication)
+                        ;
+                    }
                     Toast.makeText(ReminderActivity.this, "Recordatorio actualizado correctamente.", Toast.LENGTH_SHORT).show();
                     finish();
                 })
